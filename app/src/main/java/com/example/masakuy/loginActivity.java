@@ -72,10 +72,10 @@ public class loginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!et_email.getText().toString().matches(emailPattern)) {
-                    et_email.setTextColor(Color.RED);
+                if (!et_email.getText().toString().matches(emailPattern)) { // ini buat ngecek inputan email ada karakter '@' sama '.' apa engga
+                    et_email.setTextColor(Color.RED); // kalo gada diubah warna nya jd merah
                 } else {
-                    et_email.setTextColor(getResources().getColor(R.color.white));
+                    et_email.setTextColor(getResources().getColor(R.color.white)); // kalo ada diubah jadi putih
                 }
             }
 
@@ -85,7 +85,7 @@ public class loginActivity extends AppCompatActivity {
             }
         });
 
-        btnMasuk.setOnClickListener(new View.OnClickListener() {
+        btnMasuk.setOnClickListener(new View.OnClickListener() { //ini buat kalo si button sign in nya dipencet
             @Override
             public void onClick(View v) {
                 loginWithEmailandPassword();
@@ -97,29 +97,32 @@ public class loginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
+        if (currentUser != null) { // ini buat ngecek, ada user yg lg login apa engga, kalo ada dia langsung ngirim ke halaman utama.
             setActivity(MainActivity.class);
         }
     }
 
     private void loginWithEmailandPassword() {
 
-        String email = et_email.getText().toString();
-        String pass = et_password.getText().toString();
+        String email = et_email.getText().toString(); // ini ngambil email dr kotak email di login
+        String pass = et_password.getText().toString(); // ini ngambil password dr kotak email di login
 
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(email)) { //kalo emailnya kosong
             Toast.makeText(this, "Email tidak boleh kosong", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(pass)) {
+        } else if (TextUtils.isEmpty(pass)) { //kalo passwordnya kosong
             Toast.makeText(this, "Password tidak boleh kosong", Toast.LENGTH_SHORT).show();
-        } else {
+        } else { //kalo diisi semua
+
+            //Ini buat Alert Dialog
             mDialog.setMessage("Tunggu sebentar...");
             mDialog.setCancelable(false);
             mDialog.setTitle("Login");
             mDialog.show();
 
+            //Ini method bawaan firebasenya kalo mau login via email dan password
             mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
-                public void onComplete(Task<AuthResult> task) {
+                public void onComplete(Task<AuthResult> task) { //Ini kondisi kalo sukses login
                     if (task.isSuccessful()) {
                         setActivity(MainActivity.class);
                         Toast.makeText(loginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();

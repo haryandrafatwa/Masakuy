@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">masakuy</string>
+    <string name="app_name">Masakuy</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="sign_in_with">Sign in with</string>
