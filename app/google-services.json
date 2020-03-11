@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "72174548810",
+    "firebase_url": "https://masakuy-telu.firebaseio.com",
+    "project_id": "masakuy-telu",
+    "storage_bucket": "masakuy-telu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72174548810:android:58cb9eaa43d221f72273b3",
+        "android_client_info": {
+          "package_name": "com.example.masakuy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "72174548810-8jte4lthkt3cq6dtddq3jjtn3it2i2h1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.masakuy",
+            "certificate_hash": "1cd1cd534a3902988e968b7f5f0ac35878da3e32"
+          }
+        },
+        {
+          "client_id": "72174548810-utkgobtd0tg2igfj7lv28gu2hr8k7p1p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQfuNgasnQ92DN2z-AH3FBOYzGqwbG0I0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "72174548810-utkgobtd0tg2igfj7lv28gu2hr8k7p1p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

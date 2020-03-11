@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">masakuy</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="sign_in_with">Sign in with</string>
+    <string name="sign_in">Sign in</string>
+    <string name="secondactivity">Second Activity</string>
+    <string name="title_activity_wadasd">wadasd</string>
+    <string name="thirdactivity">thirdactivity</string>
+    <string name="fouractivity">fouractivity</string>
+    <string name="fifthactivity">fifthactivity</string>
+</resources>
