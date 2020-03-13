@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/tv_settingtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="32dp">
+
+        <ImageView
+            android:id="@+id/iv_food_recipe"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/ic_settings"/>
+
+        <RelativeLayout
+            android:id="@+id/layout_food_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_food_recipe"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp">
+            <TextView
+                android:id="@+id/tv_food_recipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Setting"
+                android:textSize="28sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/separator"
+                android:layout_below="@id/tv_food_recipe"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/tv_settingtitle"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/tv_changepassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Change Password"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:padding="20dp"
+            android:clickable="true"/>
+
+        <TextView
+            android:id="@+id/tv_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="About"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:padding="20dp"
+            android:clickable="true"/>
+
+        <TextView
+            android:id="@+id/tv_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:padding="20dp"
+            android:clickable="true"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

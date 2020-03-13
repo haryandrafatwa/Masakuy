@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -57,6 +58,8 @@ public class ProfileFragment extends Fragment {
     private List<RecipeModel> mList = new ArrayList<>();
     private List<RecipeModel> reverse = new ArrayList<>();
 
+    private SettingFragment settingFragment;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +80,8 @@ public class ProfileFragment extends Fragment {
 
     private void initialize(){
 
+        settingFragment = new SettingFragment();
+
         ib_setting = getActivity().findViewById(R.id.ib_setting);
         circleImageView = getActivity().findViewById(R.id.civ_photoprofile);
         tv_username = getActivity().findViewById(R.id.tv_username);
@@ -89,7 +94,7 @@ public class ProfileFragment extends Fragment {
         ib_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Comming Soon!", Toast.LENGTH_SHORT).show();
+                setFragment(settingFragment);
             }
         });
 
@@ -177,7 +182,6 @@ public class ProfileFragment extends Fragment {
 
     }
 
-
     private void initRecyclerView(){
 
         rvListFood = getActivity().findViewById(R.id.rv_riwayat);
@@ -191,6 +195,13 @@ public class ProfileFragment extends Fragment {
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getActivity().getWindow().clearFlags(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.colorPrimary));
+    }
+
+    public void setFragment(Fragment fragment)
+    {
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameFragment,fragment);
+        fragmentTransaction.commit();
     }
 
 }
