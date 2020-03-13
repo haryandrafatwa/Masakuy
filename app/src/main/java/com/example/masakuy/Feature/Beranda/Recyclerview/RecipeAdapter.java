@@ -1,16 +1,10 @@
-package com.example.masakuy.Feature.Beranda;
+package com.example.masakuy.Feature.Beranda.Recyclerview;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
-import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -21,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.masakuy.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {

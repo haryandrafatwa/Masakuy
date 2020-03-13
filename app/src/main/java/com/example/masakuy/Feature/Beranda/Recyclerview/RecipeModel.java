@@ -1,4 +1,4 @@
-package com.example.masakuy.Feature.Beranda;
+package com.example.masakuy.Feature.Beranda.Recyclerview;
 
 public class RecipeModel {
     private String nama_masakan;

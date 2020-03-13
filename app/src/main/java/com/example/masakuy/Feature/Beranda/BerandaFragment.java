@@ -7,16 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.widget.GridLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeAdapter;
+import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeModel;
 import com.example.masakuy.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -85,7 +85,7 @@ public class BerandaFragment extends Fragment {
 
         initRecyclerView();
 
-        recipeRefs.limitToLast(4).addValueEventListener(new ValueEventListener() {
+        /*recipeRefs.limitToLast(4).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getChildrenCount()!=0){
@@ -107,10 +107,7 @@ public class BerandaFragment extends Fragment {
                                 rvListFood.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                             }
                         });
-                    }/*
-                    for (int i = mList.size()-1; i >= 0; i--) {
-                        reverse.add(mList.get(i));
-                    }*/
+                    }
                     for (int i = 0; i < mList.size(); i++) {
                         Log.d("mList ===>",mList.get(i).getNama_masakan());
                     }
@@ -129,7 +126,7 @@ public class BerandaFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
     }
 
     private void initRecyclerView(){

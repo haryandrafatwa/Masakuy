@@ -127,6 +127,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 userMap.put("username", username);
                                 userMap.put("email", email);
+                                userMap.put("displayPicture","https://firebasestorage.googleapis.com/v0/b/masakuy-telu.appspot.com/o/DisplayPictures%2Fdummy%2Fic_user.png?alt=media&token=31c1365c-3809-4c06-a013-218f2265eabb");
 
                                 dummyDispPict.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
