@@ -4,12 +4,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
@@ -50,7 +53,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         try{
             viewHolder.tv_nama_masakan.setText(model.getNama_masakan());
 
-            viewHolder.iv_item.setBackground(new BitmapDrawable(retriveVideoFrameFromVideo(model.getVideoURL())));
+
+            viewHolder.vv_item.setVideoURI(Uri.parse(model.getVideoURL()));
+            viewHolder.vv_item.seekTo(5000);
+//            viewHolder.iv_item.setBackground(new BitmapDrawable(retriveVideoFrameFromVideo(model.getVideoURL())));
         }catch (Throwable throwable){
 
         }
@@ -66,37 +72,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
         TextView tv_nama_masakan;
         CardView iv_item;
+        VideoView vv_item;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tv_nama_masakan = (TextView) itemView.findViewById(R.id.tv_item_name);
-            iv_item = (CardView) itemView.findViewById(R.id.cvItemListSetoran);
+//            iv_item = (CardView) itemView.findViewById(R.id.cvItemListSetoran);
+            vv_item = itemView.findViewById(R.id.vv_resep_makanan);
         }
     }
-
-    public static Bitmap retriveVideoFrameFromVideo(String videoPath) throws Throwable
-    {
-        Bitmap bitmap = null;
-        MediaMetadataRetriever mediaMetadataRetriever = null;
-        try
-        {
-            mediaMetadataRetriever = new MediaMetadataRetriever();
-            if (Build.VERSION.SDK_INT >= 14)
-                mediaMetadataRetriever.setDataSource(videoPath, new HashMap<String, String>());
-            else
-                mediaMetadataRetriever.setDataSource(videoPath);
-            //   mediaMetadataRetriever.setDataSource(videoPath);
-            bitmap = mediaMetadataRetriever.getFrameAtTime();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new Throwable("Exception in retriveVideoFrameFromVideo(String videoPath)" + e.getMessage());
-
-        } finally {
-            if (mediaMetadataRetriever != null) {
-                mediaMetadataRetriever.release();
-            }
-        }
-        return bitmap;
-    }
-
 }

@@ -66,7 +66,6 @@ public class RecipeFragment extends Fragment {
 
     private Button btnTambahkan;
     private ImageButton btn_addvideo;
-    private ImageView iv_thumbnail;
     private TextView tv_hapus_video;
     private EditText et_nama_masakan, et_bahan, et_cara_masak, et_lama_masak, et_deskripsi;
 
@@ -103,7 +102,6 @@ public class RecipeFragment extends Fragment {
         videoView = getActivity().findViewById(R.id.vv_recipe);
         mediaController = new MediaController(getActivity(),false);
         btn_addvideo = getActivity().findViewById(R.id.btn_add_video);
-        iv_thumbnail = getActivity().findViewById(R.id.iv_thumbnail);
 
         et_nama_masakan = getActivity().findViewById(R.id.et_nama_masakan);
         et_bahan = getActivity().findViewById(R.id.et_bahan);
@@ -144,102 +142,130 @@ public class RecipeFragment extends Fragment {
     }
 
     private void addRecipe(){
-        final String nama_masakan, bahan, cara_masak, lama_masak, deskripsi;
-        nama_masakan = et_nama_masakan.getText().toString();
-        bahan = et_bahan.getText().toString();
-        cara_masak = et_cara_masak.getText().toString();
-        lama_masak = et_lama_masak.getText().toString();
-        deskripsi = et_deskripsi.getText().toString();
 
-        userRefs.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                final String username;
-                username = dataSnapshot.child("username").getValue().toString();
-                if(TextUtils.isEmpty(nama_masakan) && TextUtils.isEmpty(bahan) && TextUtils.isEmpty(cara_masak) && TextUtils.isEmpty(lama_masak) && TextUtils.isEmpty(deskripsi)){
-                    Toast.makeText(getActivity(), "Data harus diisi!", Toast.LENGTH_SHORT).show();
-                }else{
-                    final String[] itemCount = new String[1];
-                    recipeRefs.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            itemCount[0] = String.valueOf(dataSnapshot.getChildrenCount());
-                            HashMap recipeMap = new HashMap();
-                            recipeMap.put("nama_masakan", nama_masakan);
-                            recipeMap.put("bahan",bahan);
-                            recipeMap.put("cara_masak",cara_masak);
-                            recipeMap.put("lama_masak",lama_masak);
-                            recipeMap.put("deskripsi",deskripsi);
-                            recipeMap.put("oleh",username);
-                            recipeMap.put("videoURL","-");
-                            recipeRefs.child(itemCount[0]).updateChildren(recipeMap).addOnCompleteListener(new OnCompleteListener() {
-                                @Override
-                                public void onComplete(Task task) {
-                                    uploadImage(itemCount[0]);
-                                }
-                            });
-                        }
+        if (filePath != null){
+            final String nama_masakan, bahan, cara_masak, lama_masak, deskripsi;
+            nama_masakan = et_nama_masakan.getText().toString();
+            bahan = et_bahan.getText().toString();
+            cara_masak = et_cara_masak.getText().toString();
+            lama_masak = et_lama_masak.getText().toString();
+            deskripsi = et_deskripsi.getText().toString();
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+            userRefs.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    final String username;
+                    username = dataSnapshot.child("username").getValue().toString();
+                    if(TextUtils.isEmpty(nama_masakan) && TextUtils.isEmpty(bahan) && TextUtils.isEmpty(cara_masak) && TextUtils.isEmpty(lama_masak) && TextUtils.isEmpty(deskripsi)){
+                        Toast.makeText(getActivity(), "Data harus diisi!", Toast.LENGTH_SHORT).show();
+                    }else{
+                        final String[] itemCount = new String[2];
+                        recipeRefs.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                itemCount[0] = String.valueOf(dataSnapshot.getChildrenCount());
+                                HashMap recipeMap = new HashMap();
+                                recipeMap.put("nama_masakan", nama_masakan);
+                                recipeMap.put("bahan",bahan);
+                                recipeMap.put("cara_masak",cara_masak);
+                                recipeMap.put("lama_masak",lama_masak);
+                                recipeMap.put("deskripsi",deskripsi);
+                                recipeMap.put("oleh",username);
+                                recipeMap.put("videoURL","-");
+                                recipeRefs.child(itemCount[0]).updateChildren(recipeMap).addOnCompleteListener(new OnCompleteListener() {
+                                    @Override
+                                    public void onComplete(Task task) {
+                                    }
+                                });
+                            }
 
-                        }
-                    });
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+                        userRefs.child("recipe").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                itemCount[1] = String.valueOf(dataSnapshot.getChildrenCount());
+                                HashMap recipeMap = new HashMap();
+                                recipeMap.put("nama_masakan", nama_masakan);
+                                recipeMap.put("bahan",bahan);
+                                recipeMap.put("cara_masak",cara_masak);
+                                recipeMap.put("lama_masak",lama_masak);
+                                recipeMap.put("deskripsi",deskripsi);
+                                recipeMap.put("oleh",username);
+                                recipeMap.put("videoURL","-");
+                                userRefs.child("recipe").child(itemCount[1]).updateChildren(recipeMap).addOnCompleteListener(new OnCompleteListener() {
+                                    @Override
+                                    public void onComplete(Task task) {
+                                        uploadImage(itemCount[0],itemCount[1]);
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        } else{
+            Toast.makeText(getActivity(), "Silahkan pilih video terlebih dahulu!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
-    private void uploadImage(final String itemCount) {
-        if(filePath != null)
-        {
-            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
-            progressDialog.setCancelable(false);
-            videoStorage.child(itemCount).child("tutorial_video").putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getActivity(), "Tambahkan Berhasil", Toast.LENGTH_SHORT).show();
-                            videoStorage.child(itemCount).child("tutorial_video").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    recipeRefs.child(itemCount).child("videoURL").setValue(uri.toString());
-                                    setClearInput();
-                                }
-                            });
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getActivity(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                        }
-                    });
-        }else{
-            Log.d("MKAOJOIDJOQIMNJE","File Path NULL");
-        }
+    private void uploadImage(final String itemCountRecipe, final String itemCountUser) {
+
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Uploading...");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        videoStorage.child(itemCountRecipe).child("tutorial_video").putFile(filePath)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.dismiss();
+                        videoStorage.child(itemCountRecipe).child("tutorial_video").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                recipeRefs.child(itemCountRecipe).child("videoURL").setValue(uri.toString());
+                                userRefs.child("recipe").child(itemCountUser).child("videoURL").setValue(uri.toString());
+                                Toast.makeText(getActivity(), "Tambahkan Berhasil!", Toast.LENGTH_SHORT).show();
+                                setClearInput();
+                            }
+                        });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                .getTotalByteCount());
+                        progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                    }
+                });
     }
 
     private void chooseImage() {
         Intent intent = new Intent();
-        intent.setType("*/*");
+        intent.setType("video/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Video"), PICK_IMAGE_REQUEST );
     }

@@ -85,12 +85,13 @@ public class BerandaFragment extends Fragment {
 
         initRecyclerView();
 
-        recipeRefs.limitToLast(1).addValueEventListener(new ValueEventListener() {
+        recipeRefs.limitToLast(4).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getChildrenCount()!=0){
                     tv_recipe_empty.setVisibility(View.INVISIBLE);
                     mList.clear();
+                    reverse.clear();
                     for (DataSnapshot dats:dataSnapshot.getChildren()){
                         mList.add(new RecipeModel(dats.child("nama_masakan").getValue().toString(),dats.child("videoURL").getValue().toString()));
                         Log.d("981234783784",dats.child("nama_masakan").getValue().toString());
@@ -106,9 +107,21 @@ public class BerandaFragment extends Fragment {
                                 rvListFood.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                             }
                         });
+                    }/*
+                    for (int i = mList.size()-1; i >= 0; i--) {
+                        reverse.add(mList.get(i));
+                    }*/
+                    for (int i = 0; i < mList.size(); i++) {
+                        Log.d("mList ===>",mList.get(i).getNama_masakan());
+                    }
+                    Collections.reverse(mList);
+                    reverse.addAll(mList);
+                    for (int i = 0; i < reverse.size(); i++) {
+                        Log.d("reverse ===>",reverse.get(i).getNama_masakan());
                     }
                 }else{
                     tv_recipe_empty.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
                 }
             }
 
@@ -122,9 +135,8 @@ public class BerandaFragment extends Fragment {
     private void initRecyclerView(){
 
         rvListFood = getActivity().findViewById(R.id.rv_food_item);
-        adapter = new RecipeAdapter(mList,getActivity().getApplicationContext(),getActivity());
+        adapter = new RecipeAdapter(reverse,getActivity().getApplicationContext(),getActivity());
         mLayoutManager = new GridLayoutManager(getActivity(),2);
-        ((GridLayoutManager) mLayoutManager).setReverseLayout(false);
         rvListFood.setLayoutManager(mLayoutManager);
         rvListFood.setAdapter(adapter);
     }
