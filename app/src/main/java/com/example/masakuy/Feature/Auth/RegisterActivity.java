@@ -1,31 +1,21 @@
-package com.example.masakuy;
+package com.example.masakuy.Feature.Auth;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.example.masakuy.MainActivity;
 import com.example.masakuy.R;
@@ -42,7 +32,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 
-public class registerActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference userRefs;
@@ -76,7 +66,7 @@ public class registerActivity extends AppCompatActivity {
         tv_masuk.setOnClickListener(new View.OnClickListener() { // ini buat aktifin kalo misalnya tulisan sign in dipencet bakal ngelakuin apa
             @Override
             public void onClick(View v) {
-                setActivity(loginActivity.class); // ini buat mindahin page, dr register ke login page
+                setActivity(LoginActivity.class); // ini buat mindahin page, dr register ke login page
             }
         });
 
@@ -154,18 +144,18 @@ public class registerActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(Task task) {
                                         if (task.isSuccessful()) { // kalo login berhasil, dia bakalan di pindah ke halaman utama
-                                            Toast.makeText(registerActivity.this, "Daftar Berhasil", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RegisterActivity.this, "Daftar Berhasil", Toast.LENGTH_SHORT).show();
                                             mDialog.dismiss();
                                             setActivity(MainActivity.class);
                                         } else {
-                                            Toast.makeText(registerActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                             mDialog.dismiss();
                                         }
                                     }
                                 });
 
                             } else {
-                                Toast.makeText(registerActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 mDialog.dismiss();
                             }
                         }
@@ -180,7 +170,7 @@ public class registerActivity extends AppCompatActivity {
     }
 
     public void setActivity(Class activity) {
-        Intent mainIntent = new Intent(registerActivity.this, activity);
+        Intent mainIntent = new Intent(RegisterActivity.this, activity);
         startActivity(mainIntent);
         finish();
     }

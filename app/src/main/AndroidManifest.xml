@@ -31,25 +31,25 @@
                 android:value="com.example.masakuy.splashscreen2" />
         </activity>
         <activity
-            android:name=".loginActivity"
+            android:name=".Feature.Auth.LoginActivity"
             android:label="@string/thirdactivity"
             android:parentActivityName=".splashscreen2">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.masakuy.loginActivity" />
+                android:value="com.example.masakuy.Feature.Auth.LoginActivity" />
         </activity>
         <activity
-            android:name=".registerActivity"
+            android:name=".RegisterActivity"
             android:label="@string/fouractivity"
-            android:parentActivityName=".loginActivity">
+            android:parentActivityName=".Feature.Auth.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.masakuy.loginActivity" />
+                android:value="com.example.masakuy.Feature.Auth.LoginActivity" />
         </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/fifthactivity"
-            android:parentActivityName=".loginActivity">
+            android:parentActivityName=".Feature.Auth.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.masakuy.MainActivity" />

@@ -9,7 +9,8 @@ import android.os.Handler;
 import com.example.masakuy.R;
 
 public class splashscreen1 extends AppCompatActivity {
-    private int waktu_loading=3000;
+//    private int waktu_loading=3000;
+    private int waktu_loading=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

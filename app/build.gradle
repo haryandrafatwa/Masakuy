@@ -34,4 +34,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.2.0' // add the Firebase Auth SDK
     implementation 'com.google.firebase:firebase-storage:19.1.1' // add the Firebase Storage SDK
     implementation 'com.google.firebase:firebase-database:19.2.1' // add the Firebase Database SDK
+    implementation 'com.firebaseui:firebase-ui-database:4.2.1'
+
+
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+
 }

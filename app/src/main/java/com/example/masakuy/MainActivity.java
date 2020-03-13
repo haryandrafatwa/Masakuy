@@ -1,67 +1,102 @@
 package com.example.masakuy;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.view.MenuItem;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.example.masakuy.Feature.Beranda.BerandaFragment;
+import com.example.masakuy.Feature.Feeds.FeedFragment;
+import com.example.masakuy.Feature.Profile.ProfileFragment;
+import com.example.masakuy.Feature.Recipe.RecipeFragment;
+import com.example.masakuy.Feature.Search.SearchFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btn_logout;
+    BottomNavigationView bottomNavigationView;
+    public static Context contextOfApplication;
+    private DatabaseReference databaseReference;
+    private String tBag="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        btn_logout = findViewById(R.id.btn_logout);
-
-        btn_logout.setOnClickListener(new View.OnClickListener() {
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                alertsignout();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild("trashbag"))
+                {
+                    tBag = dataSnapshot.child("trashbag").getValue().toString();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
+        contextOfApplication = getApplicationContext();
+
+        setContentView(R.layout.activity_main);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavBar);
+        final ProfileFragment profileFragment = new ProfileFragment();
+        final SearchFragment searchFragment = new SearchFragment();
+        final RecipeFragment recipeFragment = new RecipeFragment();
+        final FeedFragment feedFragment = new FeedFragment();
+        final BerandaFragment berandaFragment = new BerandaFragment();
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
+        {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem)
+            {
+
+                int id = menuItem.getItemId();
+                if (id == R.id.menuProfile) {
+                    setFragment(profileFragment);
+                    return true;
+                } else if (id == R.id.menuBeranda) {
+                    setFragment(berandaFragment);
+                    return true;
+                } else if (id == R.id.menuRecipe) {
+                    setFragment(recipeFragment);
+                    return true;
+                } else if (id == R.id.menuSearch) {
+                    setFragment(searchFragment);
+                    return true;
+                } else if (id == R.id.menuFeeds) {
+                    setFragment(feedFragment);
+                    return true;
+                }
+                return  false;
+            }
+
+        });
+        bottomNavigationView.setSelectedItemId(R.id.menuBeranda);
 
     }
-
-    public void alertsignout(){
-        AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(this);
-
-        // Setting Dialog Title
-        alertDialog2.setTitle("Konfirmasi Keluar");
-
-        // Setting Dialog Message
-        alertDialog2.setMessage("Apakah anda yakin ingin keluar?");
-
-        // Setting Positive "Yes" Btn
-        alertDialog2.setPositiveButton("Iya", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to execute after dialog
-                FirebaseAuth.getInstance().signOut();
-                closeActivity(loginActivity.class);
-            }
-        });
-
-        alertDialog2.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        alertDialog2.show();
-
+    public void setFragment(Fragment fragment)
+    {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameFragment,fragment);
+        fragmentTransaction.commit();
     }
 
-    private void closeActivity(Class activity) {
-        Intent mainIntent = new Intent(MainActivity.this, activity);
-        mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(mainIntent);
-        finish();
+    public static Context getContextOfApplication() {
+        return contextOfApplication;
     }
 }

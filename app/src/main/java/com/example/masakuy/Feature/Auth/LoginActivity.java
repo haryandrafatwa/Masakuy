@@ -1,17 +1,12 @@
-package com.example.masakuy;
+package com.example.masakuy.Feature.Auth;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,10 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.masakuy.MainActivity;
 import com.example.masakuy.R;
@@ -32,7 +23,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class loginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     ProgressDialog mDialog;
@@ -60,7 +51,7 @@ public class loginActivity extends AppCompatActivity {
         tv_daftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setActivity(registerActivity.class);
+                setActivity(RegisterActivity.class);
             }
         });
 
@@ -125,10 +116,10 @@ public class loginActivity extends AppCompatActivity {
                 public void onComplete(Task<AuthResult> task) { //Ini kondisi kalo sukses login
                     if (task.isSuccessful()) {
                         setActivity(MainActivity.class);
-                        Toast.makeText(loginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
                         mDialog.dismiss();
                     } else {
-                        Toast.makeText(loginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         mDialog.dismiss();
                     }
                 }
@@ -137,7 +128,7 @@ public class loginActivity extends AppCompatActivity {
     }
 
     public void setActivity(Class activity) {
-        Intent mainIntent = new Intent(loginActivity.this, activity);
+        Intent mainIntent = new Intent(LoginActivity.this, activity);
         startActivity(mainIntent);
         finish();
     }
