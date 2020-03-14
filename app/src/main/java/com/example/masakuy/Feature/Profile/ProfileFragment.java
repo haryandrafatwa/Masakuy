@@ -107,7 +107,7 @@ public class ProfileFragment extends Fragment {
 
         userRefs = FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        userRefs.addValueEventListener(new ValueEventListener() {
+        userRefs.addValueEventListener(new ValueEventListener() { // fungsi untuk ngambil informasi user pd firebase database
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -145,7 +145,7 @@ public class ProfileFragment extends Fragment {
                     mList.clear();
                     reverse.clear();
                     for (DataSnapshot dats:dataSnapshot.getChildren()){
-                        mList.add(new RecipeModel(dats.child("nama_masakan").getValue().toString(),dats.child("videoURL").getValue().toString()));
+                        mList.add(new ArtikelModel(dats.child("nama_masakan").getValue().toString(),dats.child("videoURL").getValue().toString()));
                         adapter.notifyDataSetChanged();
 
                         rvListFood.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -197,7 +197,7 @@ public class ProfileFragment extends Fragment {
         getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.colorPrimary));
     }
 
-    public void setFragment(Fragment fragment)
+    public void setFragment(Fragment fragment) // fungsi buat pindah - pindah fragment
     {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameFragment,fragment);

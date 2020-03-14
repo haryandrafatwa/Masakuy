@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.masakuy.Feature.Beranda.BerandaFragment;
-import com.example.masakuy.Feature.Feeds.FeedFragment;
+import com.example.masakuy.Feature.Artikel.ArtikelFragment;
 import com.example.masakuy.Feature.Profile.ProfileFragment;
 import com.example.masakuy.Feature.Recipe.RecipeFragment;
 import com.example.masakuy.Feature.Search.SearchFragment;
@@ -53,11 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavBar);
-        final ProfileFragment profileFragment = new ProfileFragment();
-        final SearchFragment searchFragment = new SearchFragment();
-        final RecipeFragment recipeFragment = new RecipeFragment();
-        final FeedFragment feedFragment = new FeedFragment();
-        final BerandaFragment berandaFragment = new BerandaFragment();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
         {
@@ -67,19 +62,24 @@ public class MainActivity extends AppCompatActivity {
 
                 int id = menuItem.getItemId();
                 if (id == R.id.menuProfile) {
+                    ProfileFragment profileFragment = new ProfileFragment();
                     setFragment(profileFragment);
                     return true;
                 } else if (id == R.id.menuBeranda) {
+                    BerandaFragment berandaFragment = new BerandaFragment();
                     setFragment(berandaFragment);
                     return true;
                 } else if (id == R.id.menuRecipe) {
+                    RecipeFragment recipeFragment = new RecipeFragment();
                     setFragment(recipeFragment);
                     return true;
                 } else if (id == R.id.menuSearch) {
+                    SearchFragment searchFragment = new SearchFragment();
                     setFragment(searchFragment);
                     return true;
                 } else if (id == R.id.menuFeeds) {
-                    setFragment(feedFragment);
+                    ArtikelFragment artikelFragment = new ArtikelFragment();
+                    setFragment(artikelFragment);
                     return true;
                 }
                 return  false;

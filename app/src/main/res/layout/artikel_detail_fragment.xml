@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView android:id="@+id/cv_artikel"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginTop="32dp"
+    android:layout_marginRight="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp">
+
+        <RelativeLayout
+            android:id="@+id/artikel_image_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_artikel_detail"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"/>
+
+            <TextView
+                android:id="@+id/tv_artikel_title_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/iv_artikel_detail"
+                android:textSize="12sp"
+                android:padding="10dp"
+                android:background="@drawable/bg_tv_white_transp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_medium"/>
+
+            <ImageButton
+                android:id="@+id/ib_like_artikel_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_favorite_border"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_alignParentEnd="true"/>
+
+            <ImageButton
+                android:id="@+id/ib_share_artikel_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_share"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_toLeftOf="@id/ib_like_artikel_detail"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/artikel_image_layout">
+
+            <TextView
+                android:id="@+id/tv_body_artikel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="400dp"
+                android:background="@drawable/bg_tv_white_transp"
+                android:layout_marginTop="16dp"
+                android:inputType="textMultiLine"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="top|left"
+                android:padding="10dp"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>

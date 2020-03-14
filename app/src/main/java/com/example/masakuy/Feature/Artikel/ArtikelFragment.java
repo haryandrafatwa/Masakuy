@@ -1,7 +1,6 @@
-package com.example.masakuy.Feature.Beranda;
+package com.example.masakuy.Feature.Artikel;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +9,14 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.masakuy.Feature.Artikel.Recyclerview.ArtikelAdapter;
+import com.example.masakuy.Feature.Artikel.Recyclerview.ArtikelModel;
+import com.example.masakuy.Feature.Beranda.BerandaFragment;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeAdapter;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeModel;
 import com.example.masakuy.R;
@@ -25,12 +27,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-
-
-public class BerandaFragment extends Fragment {
+public class ArtikelFragment extends Fragment {
 
     private RecyclerViewReadyCallback recyclerViewReadyCallback;
 
@@ -38,16 +37,14 @@ public class BerandaFragment extends Fragment {
         void onLayoutReady();
     }
 
-    private RecyclerView rvListFood;
+    private ProgressBar progressBar;
+    private TextView tv_artikel_empty;
+    private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<RecipeModel> mList = new ArrayList<>();
-    private List<RecipeModel> reverse = new ArrayList<>();
-    private ProgressBar progressBar;
+    private List<ArtikelModel> mList = new ArrayList<>();
 
-    private TextView tv_recipe_empty;
-
-    private DatabaseReference recipeRefs;
+    private DatabaseReference artikelRefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +55,7 @@ public class BerandaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.beranda_fragment, container, false);
+        return inflater.inflate(R.layout.artikel_fragment, container, false);
     }
 
     @Override
@@ -68,12 +65,12 @@ public class BerandaFragment extends Fragment {
         initialize();
     }
 
-    private void initialize(){ // fungsi untuk inisiasi semua object yang ada pada layout beranda
+    private void initialize(){ // fungsi untuk inisiasi semua object yang ada pada layout artikel
 
-        recipeRefs = FirebaseDatabase.getInstance().getReference().child("Recipe");
+        artikelRefs = FirebaseDatabase.getInstance().getReference().child("Artikel");
 
-        progressBar = getActivity().findViewById(R.id.pb_food_recipe);
-        tv_recipe_empty = getActivity().findViewById(R.id.tv_recipe_empty);
+        progressBar = getActivity().findViewById(R.id.pb_artikel);
+        tv_artikel_empty = getActivity().findViewById(R.id.tv_artikel_empty);
 
         recyclerViewReadyCallback = new RecyclerViewReadyCallback() {
             @Override
@@ -84,56 +81,46 @@ public class BerandaFragment extends Fragment {
 
         initRecyclerView();
 
-        /*recipeRefs.limitToLast(4).addValueEventListener(new ValueEventListener() {
+        artikelRefs.orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getChildrenCount()!=0){
-                    tv_recipe_empty.setVisibility(View.INVISIBLE);
+                    tv_artikel_empty.setVisibility(View.INVISIBLE);
                     mList.clear();
-                    reverse.clear();
                     for (DataSnapshot dats:dataSnapshot.getChildren()){
-                        mList.add(new ArtikelModel(dats.child("nama_masakan").getValue().toString(),dats.child("videoURL").getValue().toString()));
-                        Log.d("981234783784",dats.child("nama_masakan").getValue().toString());
-                        Log.d("981234783784",dats.child("videoURL").getValue().toString());
+                        mList.add(new ArtikelModel(dats.getKey(),dats.child("artikel_subject").getValue().toString(),dats.child("artikel_body").getValue().toString(),dats.child("image").getValue().toString()));
                         adapter.notifyDataSetChanged();
 
-                        rvListFood.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                             @Override
                             public void onGlobalLayout() {
                                 if(recyclerViewReadyCallback != null){
                                     recyclerViewReadyCallback.onLayoutReady();
                                 }
-                                rvListFood.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                                recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                             }
                         });
                     }
-                    for (int i = 0; i < mList.size(); i++) {
-                        Log.d("mList ===>",mList.get(i).getNama_masakan());
-                    }
-                    Collections.reverse(mList);
-                    reverse.addAll(mList);
-                    for (int i = 0; i < reverse.size(); i++) {
-                        Log.d("reverse ===>",reverse.get(i).getNama_masakan());
-                    }
                 }else{
-                    tv_recipe_empty.setVisibility(View.VISIBLE);
+                    tv_artikel_empty.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
-        });*/
+        });
     }
 
-    private void initRecyclerView(){ // fungsi buat bikin object list resep makanan
-        rvListFood = getActivity().findViewById(R.id.rv_food_item);
-        adapter = new RecipeAdapter(reverse,getActivity().getApplicationContext(),getActivity());
-        mLayoutManager = new GridLayoutManager(getActivity(),2);
-        rvListFood.setLayoutManager(mLayoutManager);
-        rvListFood.setAdapter(adapter);
+    private void initRecyclerView(){ // fungsi buat bikin object list artikel
+        recyclerView = getActivity().findViewById(R.id.rv_artikel);
+        adapter = new ArtikelAdapter(mList,getActivity().getApplicationContext(),getActivity());
+        mLayoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,true);
+        ((LinearLayoutManager) mLayoutManager).setStackFromEnd(true);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
     private void setStatusBar(){ // fungsi buat ubah warna status bar
@@ -141,5 +128,4 @@ public class BerandaFragment extends Fragment {
         getActivity().getWindow().clearFlags(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.colorPrimary));
     }
-
 }

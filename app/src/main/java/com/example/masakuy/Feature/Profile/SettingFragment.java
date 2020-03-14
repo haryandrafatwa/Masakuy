@@ -77,8 +77,6 @@ public class SettingFragment extends Fragment {
             }
         });
 
-        Toast.makeText(getActivity(), FirebaseAuth.getInstance().getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
-
     }
 
     private void initializeDialogChangePassword(){
@@ -115,7 +113,7 @@ public class SettingFragment extends Fragment {
 
                                 firebaseUser.reauthenticate(authCredential).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
+                                    public void onComplete(@NonNull Task<Void> task) { // ini buat ngecek kalo si password lama nya itu bener apa engga
                                         if (task.isSuccessful()){
                                             firebaseUser.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
@@ -158,7 +156,7 @@ public class SettingFragment extends Fragment {
         dialog.show();
     }
 
-    public void alertsignout(){
+    public void alertsignout(){ // fungsi untuk membuat alert dialog ketika ingin logout
         AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(getActivity());
 
         // Setting Dialog Title
@@ -187,7 +185,7 @@ public class SettingFragment extends Fragment {
 
     }
 
-    private void closeActivity(Class activity) {
+    private void closeActivity(Class activity) { // fungsi untuk kelarin activity terakhir, dan diganti ke activity baru trus dikirim ke halaman login
         Intent mainIntent = new Intent(getActivity(), activity);
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mainIntent);
