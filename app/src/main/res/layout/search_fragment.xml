@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginHorizontal="16dp">
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search"
+        android:background="@drawable/bg_edittext_putih"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_regular"
+        android:padding="12dp"
+        android:inputType="text"
+        android:layout_marginTop="32dp"
+        android:drawableRight="@drawable/ic_search"/>
+
+    <ProgressBar
+        android:id="@+id/pb_search_food_recipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_search"
+        android:layout_marginTop="32dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search_food_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/recipe_list"
+            tools:itemCount="2"/>
+
+        <TextView
+            android:id="@+id/tv_recipe_not_found"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recipe is not found"
+            android:textSize="24sp"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/black"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/tv_recipe_is_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recipe is empty"
+            android:textSize="24sp"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/black"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

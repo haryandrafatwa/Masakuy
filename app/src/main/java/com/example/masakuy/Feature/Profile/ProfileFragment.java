@@ -137,7 +137,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        /*userRefs.child("recipe").orderByKey().addValueEventListener(new ValueEventListener() {
+        userRefs.child("recipe").orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getChildrenCount()!=0){
@@ -145,7 +145,8 @@ public class ProfileFragment extends Fragment {
                     mList.clear();
                     reverse.clear();
                     for (DataSnapshot dats:dataSnapshot.getChildren()){
-                        mList.add(new ArtikelModel(dats.child("nama_masakan").getValue().toString(),dats.child("videoURL").getValue().toString()));
+                        mList.add(new RecipeModel(dats.getKey(),dats.child("nama_masakan").getValue().toString(),dats.child("bahan").getValue().toString(),dats.child("cara_masak").getValue().toString(),
+                                Integer.valueOf(dats.child("lama_masak").getValue().toString()),dats.child("oleh").getValue().toString(),dats.child("videoURL").getValue().toString(), dats.child("deskripsi").getValue().toString()));
                         adapter.notifyDataSetChanged();
 
                         rvListFood.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -178,7 +179,7 @@ public class ProfileFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
+        });
 
     }
 

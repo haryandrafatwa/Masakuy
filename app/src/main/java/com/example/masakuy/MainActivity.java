@@ -54,6 +54,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavBar);
 
+        final ArtikelFragment artikelFragment = new ArtikelFragment();
+        final SearchFragment searchFragment = new SearchFragment();
+        final BerandaFragment berandaFragment = new BerandaFragment();
+        final RecipeFragment recipeFragment = new RecipeFragment();
+        final ProfileFragment profileFragment = new ProfileFragment();
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
         {
             @Override
@@ -62,23 +68,18 @@ public class MainActivity extends AppCompatActivity {
 
                 int id = menuItem.getItemId();
                 if (id == R.id.menuProfile) {
-                    ProfileFragment profileFragment = new ProfileFragment();
                     setFragment(profileFragment);
                     return true;
                 } else if (id == R.id.menuBeranda) {
-                    BerandaFragment berandaFragment = new BerandaFragment();
                     setFragment(berandaFragment);
                     return true;
                 } else if (id == R.id.menuRecipe) {
-                    RecipeFragment recipeFragment = new RecipeFragment();
                     setFragment(recipeFragment);
                     return true;
                 } else if (id == R.id.menuSearch) {
-                    SearchFragment searchFragment = new SearchFragment();
                     setFragment(searchFragment);
                     return true;
                 } else if (id == R.id.menuFeeds) {
-                    ArtikelFragment artikelFragment = new ArtikelFragment();
                     setFragment(artikelFragment);
                     return true;
                 }
