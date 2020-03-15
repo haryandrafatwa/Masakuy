@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_recipe_detail"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize">
+
+            <TextView
+                android:id="@+id/tv_nama_masakan_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nasi Uduk Mpok Lela"
+                android:textSize="22sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/poppins_medium" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <RelativeLayout
+            android:id="@+id/layout_subtitle_recipe_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar_recipe_detail"
+            android:paddingHorizontal="16dp">
+
+            <TextView
+                android:id="@+id/tv_oleh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="By Asep"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
+
+            <ImageButton
+                android:id="@+id/ib_like_recipe_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:background="@drawable/ic_favorite_border"
+                android:layout_alignParentEnd="true"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/white"/>
+
+            <ImageButton
+                android:id="@+id/ib_share_recipe_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:background="@drawable/ic_share"
+                android:layout_toLeftOf="@id/ib_like_recipe_detail"
+                android:backgroundTint="@color/white"
+                android:layout_marginRight="16dp"
+                android:textColor="@color/white"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_video_recipe_detail"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/layout_subtitle_recipe_detail"
+            android:paddingHorizontal="16dp"
+            android:layout_marginTop="16dp">
+
+            <com.example.masakuy.ScalableVideoView
+                android:id="@+id/vv_recipe_detail"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"/>
+
+            <ProgressBar
+                android:id="@+id/pb_recipe_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rv_tutorial_masak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/layout_video_recipe_detail"
+            android:clickable="true">
+
+
+            <TextView
+                android:id="@+id/tv_food_recipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lihat Tutorial Masak"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"/>
+
+            <ImageButton
+                android:id="@+id/ib_arrow_tutorial_recipe"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_arrow_forward"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/separator"
+                android:layout_below="@id/tv_food_recipe"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_lama_masak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rv_tutorial_masak"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:id="@+id/iv_lama_masak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_watch_later"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/tv_lama_masak_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_lama_masak"
+                android:text="Lama memasak"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"/>
+
+            <TextView
+                android:id="@+id/tv_lama_masak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_lama_masak_title"
+                android:text="10"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="4dp"/>
+
+            <TextView
+                android:id="@+id/tv_minute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_lama_masak"
+                android:text="Min"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="2dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_deskripsi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_lama_masak"
+            android:background="@drawable/bg_tv_white_transp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/tv_deskripsi_detail_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deskripsi:"
+                android:textSize="20dp"
+                android:fontFamily="@font/poppins_medium"
+                android:paddingHorizontal="12dp"
+                android:paddingTop="12dp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_deskripsi_recipe_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
+                android:inputType="textMultiLine"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="top|left"
+                android:padding="12dp"
+                android:layout_below="@+id/tv_deskripsi_detail_title"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_komentar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="120dp"
+            android:layout_below="@id/layout_deskripsi"
+            android:background="@drawable/bg_tv_white_transp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/tv_komentar_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Komentar:"
+                android:textSize="20dp"
+                android:fontFamily="@font/poppins_medium"
+                android:padding="12dp"
+                android:textColor="@color/black"/>
+
+            <RelativeLayout
+                android:id="@+id/layout_rv_komentar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_komentar_detail">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_list_komentar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="100dp"
+                    android:layout_marginHorizontal="16dp"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    tools:listitem="@layout/komentar_item"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_komentar_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Belum ada komentar"
+                    android:fontFamily="@font/poppins_medium"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_rv_komentar"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <EditText
+                    android:id="@+id/et_komentar"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext"
+                    android:layout_marginLeft="16dp"
+                    android:hint="Tambahkan Komentar"
+                    android:inputType="textMultiLine"
+                    android:padding="10dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_centerVertical="true"/>
+
+                <Button
+                    android:id="@+id/btn_kirim_komentar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:hint="Kirim"
+                    android:textColorHint="@color/black"
+                    android:layout_toRightOf="@id/et_komentar"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@color/white"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>

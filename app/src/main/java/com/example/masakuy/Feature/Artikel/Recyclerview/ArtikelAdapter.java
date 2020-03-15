@@ -75,7 +75,6 @@ public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ViewHold
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mActivity, "Item " + position + " is clicked.", Toast.LENGTH_SHORT).show();
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("key",model);
                     ArtikelDetailFragment artikelDetailFragment = new ArtikelDetailFragment();

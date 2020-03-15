@@ -172,6 +172,7 @@ public class RecipeFragment extends Fragment {
                                 recipeMap.put("deskripsi",deskripsi);
                                 recipeMap.put("oleh",username);
                                 recipeMap.put("videoURL","-");
+                                recipeMap.put("likeCount",0);
                                 recipeRefs.child(itemCount[0]).updateChildren(recipeMap).addOnCompleteListener(new OnCompleteListener() {
                                     @Override
                                     public void onComplete(Task task) {

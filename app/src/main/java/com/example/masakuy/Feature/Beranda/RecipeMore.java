@@ -7,16 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.masakuy.Feature.Artikel.Recyclerview.ArtikelModel;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeAdapter;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeModel;
 import com.example.masakuy.R;
@@ -31,8 +31,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-
-public class BerandaFragment extends Fragment {
+public class RecipeMore extends Fragment {
 
     private RecyclerViewReadyCallback recyclerViewReadyCallback;
 
@@ -46,9 +45,6 @@ public class BerandaFragment extends Fragment {
     private List<RecipeModel> mList = new ArrayList<>();
     private List<RecipeModel> reverse = new ArrayList<>();
     private ProgressBar progressBar;
-    private ImageButton ib_recipe;
-
-    private RecipeMore recipeMore;
 
     private TextView tv_recipe_empty;
 
@@ -63,7 +59,7 @@ public class BerandaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.beranda_fragment, container, false);
+        return inflater.inflate(R.layout.recipe_more, container, false);
     }
 
     @Override
@@ -79,7 +75,6 @@ public class BerandaFragment extends Fragment {
 
         progressBar = getActivity().findViewById(R.id.pb_food_recipe);
         tv_recipe_empty = getActivity().findViewById(R.id.tv_recipe_empty);
-        ib_recipe = getActivity().findViewById(R.id.ib_arrow_more_recipe);
 
         recyclerViewReadyCallback = new RecyclerViewReadyCallback() {
             @Override
@@ -88,17 +83,9 @@ public class BerandaFragment extends Fragment {
             }
         };
 
-        ib_recipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recipeMore = new RecipeMore();
-                setFragment(recipeMore);
-            }
-        });
-
         initRecyclerView();
 
-        /*recipeRefs.limitToLast(4).addValueEventListener(new ValueEventListener() {
+        recipeRefs.orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getChildrenCount()!=0){
@@ -106,9 +93,8 @@ public class BerandaFragment extends Fragment {
                     mList.clear();
                     reverse.clear();
                     for (DataSnapshot dats:dataSnapshot.getChildren()){
-                        mList.add(new ArtikelModel(dats.child("nama_masakan").getValue().toString(),dats.child("videoURL").getValue().toString()));
-                        Log.d("981234783784",dats.child("nama_masakan").getValue().toString());
-                        Log.d("981234783784",dats.child("videoURL").getValue().toString());
+                        mList.add(new RecipeModel(dats.getKey(),dats.child("nama_masakan").getValue().toString(),dats.child("bahan").getValue().toString(),dats.child("cara_masak").getValue().toString(),
+                                Integer.valueOf(dats.child("lama_masak").getValue().toString()),dats.child("oleh").getValue().toString(),dats.child("videoURL").getValue().toString(), dats.child("deskripsi").getValue().toString()));
                         adapter.notifyDataSetChanged();
 
                         rvListFood.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -139,7 +125,7 @@ public class BerandaFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
+        });
     }
 
     private void initRecyclerView(){ // fungsi buat bikin object list resep makanan
@@ -148,12 +134,6 @@ public class BerandaFragment extends Fragment {
         mLayoutManager = new GridLayoutManager(getActivity(),2);
         rvListFood.setLayoutManager(mLayoutManager);
         rvListFood.setAdapter(adapter);
-    }
-
-    private void setFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frameFragment,fragment).addToBackStack(null);
-        fragmentTransaction.commit();
     }
 
     private void setStatusBar(){ // fungsi buat ubah warna status bar

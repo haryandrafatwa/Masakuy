@@ -13,6 +13,25 @@ public class ArtikelModel implements Parcelable {
         this.imageURL = imageURL;
     }
 
+    protected ArtikelModel(Parcel in) {
+        key = in.readString();
+        subject = in.readString();
+        body = in.readString();
+        imageURL = in.readString();
+    }
+
+    public static final Creator<ArtikelModel> CREATOR = new Creator<ArtikelModel>() {
+        @Override
+        public ArtikelModel createFromParcel(Parcel in) {
+            return new ArtikelModel(in);
+        }
+
+        @Override
+        public ArtikelModel[] newArray(int size) {
+            return new ArtikelModel[size];
+        }
+    };
+
     public String getKey() {
         return key;
     }
@@ -52,6 +71,9 @@ public class ArtikelModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-
+        parcel.writeString(key);
+        parcel.writeString(subject);
+        parcel.writeString(body);
+        parcel.writeString(imageURL);
     }
 }

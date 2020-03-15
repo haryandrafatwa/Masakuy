@@ -2,16 +2,22 @@ package com.example.masakuy.Feature.Beranda.Recyclerview;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.masakuy.Feature.Artikel.ArtikelDetailFragment;
+import com.example.masakuy.Feature.Beranda.RecipeDetailFragment;
 import com.example.masakuy.R;
 
 import java.util.ArrayList;
@@ -50,10 +56,26 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             viewHolder.vv_item.setVideoURI(Uri.parse(model.getVideoURL()));
             viewHolder.vv_item.seekTo(5000);
 //            viewHolder.iv_item.setBackground(new BitmapDrawable(retriveVideoFrameFromVideo(model.getVideoURL())));
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("key",model);
+                    RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
+                    recipeDetailFragment.setArguments(bundle);
+                    setFragment(recipeDetailFragment);
+                }
+            });
         }catch (Throwable throwable){
 
         }
 
+    }
+
+    private void setFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = mActivity.getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameFragment,fragment).addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override
