@@ -6,7 +6,8 @@
     android:layout_marginLeft="16dp"
     android:layout_marginTop="32dp"
     android:layout_marginRight="16dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -34,14 +35,31 @@
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_medium"/>
 
-            <ImageButton
-                android:id="@+id/ib_like_artikel_detail"
+            <RelativeLayout
+                android:id="@+id/layout_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_favorite_border"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_alignParentEnd="true"/>
+                android:layout_marginRight="16dp">
+
+                <ImageButton
+                    android:id="@+id/ib_like_artikel_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_favorite_border"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:id="@+id/tv_like_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ib_like_artikel_detail"
+                    android:text="50 Like"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_regular"/>
+
+            </RelativeLayout>
 
             <ImageButton
                 android:id="@+id/ib_share_artikel_detail"
@@ -50,11 +68,12 @@
                 android:background="@drawable/ic_share"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_toLeftOf="@id/ib_like_artikel_detail"/>
+                android:layout_toLeftOf="@id/layout_like"/>
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/layout_tips_tricks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/artikel_image_layout">
@@ -63,7 +82,7 @@
                 android:id="@+id/tv_body_artikel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="400dp"
+                android:minHeight="200dp"
                 android:background="@drawable/bg_tv_white_transp"
                 android:layout_marginTop="16dp"
                 android:inputType="textMultiLine"
@@ -71,6 +90,90 @@
                 android:fontFamily="@font/poppins_regular"
                 android:gravity="top|left"
                 android:padding="10dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_komentar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="120dp"
+            android:layout_below="@id/layout_tips_tricks"
+            android:background="@drawable/bg_tv_white_transp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/tv_komentar_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Komentar:"
+                android:textSize="20dp"
+                android:fontFamily="@font/poppins_medium"
+                android:padding="12dp"
+                android:textColor="@color/black"/>
+
+            <RelativeLayout
+                android:id="@+id/layout_rv_komentar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_komentar_detail">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_list_komentar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="100dp"
+                    android:layout_marginHorizontal="16dp"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    tools:listitem="@layout/komentar_item"
+                    tools:itemCount="2"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_komentar_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Belum ada komentar"
+                    android:fontFamily="@font/poppins_medium"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_rv_komentar"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <EditText
+                    android:id="@+id/et_komentar"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext"
+                    android:layout_marginLeft="16dp"
+                    android:hint="Tambahkan Komentar"
+                    android:inputType="textMultiLine"
+                    android:padding="10dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_centerVertical="true"/>
+
+                <Button
+                    android:id="@+id/btn_kirim_komentar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:hint="Kirim"
+                    android:textColorHint="@color/black"
+                    android:layout_toRightOf="@id/et_komentar"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@color/white"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

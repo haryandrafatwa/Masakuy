@@ -33,7 +33,7 @@
                     android:id="@+id/tv_recipe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tambah Recipe"
+                    android:text="Tambah Produk"
                     android:textSize="24sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppins_regular"/>
@@ -58,7 +58,7 @@
                 android:id="@+id/tv_tambahkanvideo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tambahkan video tutorial"
+                android:text="Tambahkan Foto untuk produk Anda:"
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="18sp"/>
@@ -70,15 +70,15 @@
                 android:layout_below="@+id/tv_tambahkanvideo"
                 android:layout_marginTop="16dp">
 
-                <VideoView
-                    android:id="@+id/vv_recipe"
+                <ImageView
+                    android:id="@+id/iv_foto_produk"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_centerHorizontal="true"
                     android:visibility="invisible"/>
 
                 <ImageButton
-                    android:id="@+id/btn_add_video"
+                    android:id="@+id/btn_add_foto_produk"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:background="@drawable/ic_add_circle"
@@ -87,10 +87,10 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/tv_hapus_video"
+                android:id="@+id/tv_hapus_foto_resep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hapus Video"
+                android:text="Hapus Foto"
                 android:layout_below="@id/layout_video"
                 android:layout_marginTop="8dp"
                 android:textSize="14sp"
@@ -102,15 +102,15 @@
                 android:id="@+id/tv_nama_masakan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nama Masakan"
+                android:text="Nama Produk"
                 android:textColor="@color/black"
-                android:layout_below="@+id/tv_hapus_video"
+                android:layout_below="@+id/tv_hapus_foto_resep"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"/>
 
             <EditText
-                android:id="@+id/et_nama_masakan"
+                android:id="@+id/et_nama_produk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_edittext_putih"
@@ -125,69 +125,29 @@
                 android:id="@+id/tv_bahan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bahan"
+                android:text="Harga"
                 android:textColor="@color/black"
-                android:layout_below="@+id/et_nama_masakan"
+                android:layout_below="@+id/et_nama_produk"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"/>
 
-            <EditText
-                android:id="@+id/et_bahan"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@drawable/bg_edittext_putih"
-                android:layout_below="@id/tv_bahan"
-                android:padding="10dp"
-                android:inputType="textMultiLine"
-                android:textColor="@color/black"
-                android:fontFamily="@font/poppins_regular"
-                android:gravity="top|left"
-                android:textSize="14sp"/>
-
-            <TextView
-                android:id="@+id/tv_cara_masak"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cara Memasak"
-                android:textColor="@color/black"
-                android:layout_below="@+id/et_bahan"
-                android:fontFamily="@font/poppins_regular"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp"/>
-
-            <EditText
-                android:id="@+id/et_cara_masak"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@drawable/bg_edittext_putih"
-                android:layout_below="@id/tv_cara_masak"
-                android:padding="10dp"
-                android:inputType="textMultiLine"
-                android:textColor="@color/black"
-                android:fontFamily="@font/poppins_regular"
-                android:gravity="top|left"
-                android:textSize="14sp"/>
-
-            <TextView
-                android:id="@+id/tv_lama_masak"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lama Memasak"
-                android:textColor="@color/black"
-                android:layout_below="@+id/et_cara_masak"
-                android:fontFamily="@font/poppins_regular"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp"/>
-
-            <RelativeLayout
-                android:id="@+id/layout_lama_masak"
+            <LinearLayout
+                android:id="@+id/layout_harga"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_lama_masak">
+                android:layout_below="@id/tv_bahan">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rp. "
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
                 <EditText
-                    android:id="@+id/et_lama_masak"
-                    android:layout_width="80dp"
+                    android:id="@+id/et_harga_produk"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_edittext_putih"
                     android:padding="10dp"
@@ -195,57 +155,90 @@
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="14sp"
-                    android:gravity="center"/>
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"/>
 
                 <TextView
-                    android:id="@+id/tv_menit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Min"
-                    android:textColor="@color/black"
-                    android:layout_toRightOf="@+id/et_lama_masak"
-                    android:fontFamily="@font/poppins_regular"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="16dp"
-                    android:textSize="16sp"/>
-            </RelativeLayout>
+                    android:text="/ Kg"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_deskripsi"
+                android:id="@+id/tv_stock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Deskripsi"
+                android:text="Stok"
                 android:textColor="@color/black"
-                android:layout_below="@+id/layout_lama_masak"
+                android:layout_below="@+id/layout_harga"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"/>
+
+            <LinearLayout
+                android:id="@+id/layout_stok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_stock">
+
+                <EditText
+                    android:id="@+id/et_stok_produk"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext_putih"
+                    android:padding="10dp"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="14sp"
+                    android:layout_marginRight="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kg"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_deskripsi_produk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deskripsi Produk"
+                android:textColor="@color/black"
+                android:layout_below="@+id/layout_stok"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"/>
 
             <EditText
-                android:id="@+id/et_deskrpisi"
+                android:id="@+id/et_deskripsi_produk"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@drawable/bg_edittext_putih"
-                android:layout_below="@id/tv_deskripsi"
+                android:layout_below="@id/tv_deskripsi_produk"
                 android:padding="10dp"
                 android:inputType="textMultiLine"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_regular"
-                android:justificationMode="inter_word"
-                android:textSize="14sp"
-                android:gravity="top|left"/>
+                android:gravity="top|left"
+                android:textSize="14sp"/>
 
             <Button
-                android:id="@+id/btn_tambahkan"
+                android:id="@+id/btn_publish_artikel"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:text="Tambahkan"
-                android:layout_below="@+id/et_deskrpisi"
-                android:background="@drawable/bg_btn_red"
-                android:textColor="@color/white"
+                android:hint="Publish"
+                android:layout_below="@+id/et_deskripsi_produk"
+                android:background="@drawable/bg_btn_yellow"
+                android:textColorHint="@color/black"
                 android:textSize="16sp"
                 android:layout_marginTop="32dp"
-                android:inputType="text"
                 android:layout_marginBottom="32dp"/>
 
         </RelativeLayout>

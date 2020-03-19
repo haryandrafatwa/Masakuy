@@ -20,6 +20,7 @@ import com.example.masakuy.Feature.Artikel.Recyclerview.ArtikelModel;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeAdapter;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeModel;
 import com.example.masakuy.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +51,8 @@ public class RecipeMore extends Fragment {
 
     private DatabaseReference recipeRefs;
 
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +74,9 @@ public class RecipeMore extends Fragment {
 
     private void initialize(){ // fungsi untuk inisiasi semua object yang ada pada layout beranda
 
+        bottomNavigationView = getActivity().findViewById(R.id.bottomNavBar);
+        bottomNavigationView.setVisibility(View.GONE);
+
         recipeRefs = FirebaseDatabase.getInstance().getReference().child("Recipe");
 
         progressBar = getActivity().findViewById(R.id.pb_food_recipe);
@@ -85,7 +91,7 @@ public class RecipeMore extends Fragment {
 
         initRecyclerView();
 
-        recipeRefs.orderByKey().addValueEventListener(new ValueEventListener() {
+        /*recipeRefs.orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getChildrenCount()!=0){
@@ -125,7 +131,7 @@ public class RecipeMore extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
     }
 
     private void initRecyclerView(){ // fungsi buat bikin object list resep makanan

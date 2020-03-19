@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -27,24 +26,23 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.masakuy.Feature.Artikel.Recyclerview.ArtikelModel;
 import com.example.masakuy.Feature.Beranda.Recyclerview.KomentarAdapter;
 import com.example.masakuy.Feature.Beranda.Recyclerview.KomentarModel;
-import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeAdapter;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeModel;
-import com.example.masakuy.Feature.Recipe.MyMediaController;
+import com.example.masakuy.Feature.Tambah.MyMediaController;
 import com.example.masakuy.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,11 +57,12 @@ public class RecipeDetailFragment extends Fragment {
     }
 
     private String key, nama_masakan,bahan,cara_masak,videoURL, oleh, deskripsi;
-    private int lama_masak;
+    private int lama_masak,likeCount;
 
     private EditText et_komentar;
-    private Button btnKirim;
-    private TextView tv_nama_masakan, tv_oleh, tv_deskripsi, tv_komentar_empty,tv_lama_masak;
+    private Button btnKirim,btn_update;
+    private TextView tv_nama_masakan, tv_oleh, tv_komentar_empty,tv_lama_masak, tv_edit_deskripsi,tv_like_count;
+    private EditText tv_deskripsi;
     private VideoView videoView;
     private MediaController mediaController;
     private ProgressBar progressBar;
@@ -76,6 +75,8 @@ public class RecipeDetailFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private DatabaseReference komentarRefs,userRefs;
+
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,21 +97,11 @@ public class RecipeDetailFragment extends Fragment {
 
     private void initialize(){
 
-        Bundle bundle = this.getArguments();
-        RecipeModel recipeModel = bundle.getParcelable("key");
-
-        key = recipeModel.getKey();
-        nama_masakan = recipeModel.getNama_masakan();
-        bahan = recipeModel.getBahan();
-        cara_masak = recipeModel.getCara_masak();
-        lama_masak = recipeModel.getLama_masak();
-        videoURL = recipeModel.getVideoURL();
-        oleh = recipeModel.getOleh();
-        deskripsi = recipeModel.getDeskripsi();
+        bottomNavigationView = getActivity().findViewById(R.id.bottomNavBar);
+        bottomNavigationView.setVisibility(View.GONE);
 
         initRecyclerView();
 
-        komentarRefs = FirebaseDatabase.getInstance().getReference().child("Recipe").child(key);
         userRefs = FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         videoView = getActivity().findViewById(R.id.vv_recipe_detail);
@@ -127,13 +118,123 @@ public class RecipeDetailFragment extends Fragment {
         tv_lama_masak = getActivity().findViewById(R.id.tv_lama_masak);
         relativeLayout = getActivity().findViewById(R.id.rv_tutorial_masak);
         ib_arrow = getActivity().findViewById(R.id.ib_arrow_tutorial_recipe);
+        tv_edit_deskripsi = getActivity().findViewById(R.id.tv_edit_deskrispi);
+        btn_update = getActivity().findViewById(R.id.btn_update_deskripsi_resep);
+        tv_like_count = getActivity().findViewById(R.id.tv_like_count);
+
+        final Bundle bundleRecipe = this.getArguments();
+        final RecipeModel recipeModel = bundleRecipe.getParcelable("key");
+
+        key = recipeModel.getKey();
+
+        komentarRefs = FirebaseDatabase.getInstance().getReference().child("Recipe").child(key);
+        komentarRefs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                recipeModel.setKey(key);
+                recipeModel.setBahan(dataSnapshot.child("bahan").getValue().toString());
+                recipeModel.setCara_masak(dataSnapshot.child("cara_masak").getValue().toString());
+                recipeModel.setDeskripsi(dataSnapshot.child("deskripsi").getValue().toString());
+                recipeModel.setEmail(dataSnapshot.child("email").getValue().toString());
+                recipeModel.setImageURL(dataSnapshot.child("imageURL").getValue().toString());
+                recipeModel.setLama_masak(Integer.valueOf(dataSnapshot.child("lama_masak").getValue().toString()));
+                recipeModel.setNama_masakan(dataSnapshot.child("nama_masakan").getValue().toString());
+                recipeModel.setOleh(dataSnapshot.child("oleh").getValue().toString());
+                recipeModel.setVideoURL(dataSnapshot.child("videoURL").getValue().toString());
+                recipeModel.setLikeCount(Integer.valueOf(dataSnapshot.child("likeCount").getValue().toString()));
+                if (dataSnapshot.child("email").getValue().toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
+                    tv_edit_deskripsi.setVisibility(View.VISIBLE);
+                }else{
+                    tv_edit_deskripsi.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        komentarRefs.child("like").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount() == 0){
+                    ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite_border));
+                    ib_like.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            HashMap likeMap = new HashMap();
+                            likeMap.put("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            likeMap.put("email",FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                            komentarRefs.child("like").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(likeMap);
+                            komentarRefs.child("likeCount").setValue(dataSnapshot.getChildrenCount()+1);
+                            tv_like_count.setText((dataSnapshot.getChildrenCount()+1)+" Likes");
+                        }
+                    });
+                }else{
+                    for (DataSnapshot dats: dataSnapshot.getChildren()){
+                        if (dats.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
+                            komentarRefs.child("likeCount").setValue(dataSnapshot.getChildrenCount()-1);
+                            tv_like_count.setText((dataSnapshot.getChildrenCount()-1)+" Likes");
+                            dats.getRef().removeValue();
+                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite_border));
+                        }else{
+                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite_border));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        nama_masakan = recipeModel.getNama_masakan();
+        bahan = recipeModel.getBahan();
+        cara_masak = recipeModel.getCara_masak();
+        lama_masak = recipeModel.getLama_masak();
+        videoURL = recipeModel.getVideoURL();
+        oleh = recipeModel.getOleh();
+        deskripsi = recipeModel.getDeskripsi();
+        likeCount = recipeModel.getLikeCount();
+
+        tv_edit_deskripsi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_deskripsi.setFocusableInTouchMode(true);
+                btn_update.setVisibility(View.VISIBLE);
+                tv_edit_deskripsi.setVisibility(View.GONE);
+            }
+        });
+
+        btn_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String deskripsi = tv_deskripsi.getText().toString();
+                if(TextUtils.isEmpty(deskripsi)){
+                    Toast.makeText(getActivity(), "Silahkan isi deskripsi terlebih dahulu!", Toast.LENGTH_SHORT).show();
+                }else{
+                    komentarRefs.child("deskripsi").setValue(deskripsi).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(getActivity(), "Update berhasil!", Toast.LENGTH_SHORT).show();
+                            tv_deskripsi.setFocusable(false);
+                            btn_update.setVisibility(View.GONE);
+                            tv_edit_deskripsi.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            }
+        });
 
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putString("bahan",bahan);
-                bundle.putString("manner",cara_masak);
+                bundle.putParcelable("key",recipeModel);
                 TutorialMasakFragment tutorialMasakFragment = new TutorialMasakFragment();
                 tutorialMasakFragment.setArguments(bundle);
                 setFragment(tutorialMasakFragment);
@@ -144,8 +245,7 @@ public class RecipeDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putString("bahan",bahan);
-                bundle.putString("manner",cara_masak);
+                bundle.putParcelable("key",recipeModel);
                 TutorialMasakFragment tutorialMasakFragment = new TutorialMasakFragment();
                 tutorialMasakFragment.setArguments(bundle);
                 setFragment(tutorialMasakFragment);
@@ -159,7 +259,7 @@ public class RecipeDetailFragment extends Fragment {
                 intent.setType("text/*");
                 String shareBody = videoURL;
                 String shareSub = nama_masakan;
-                intent.putExtra(Intent.EXTRA_TEXT,shareSub+"\n\nLinkVideo:\n"+shareBody);
+                intent.putExtra(Intent.EXTRA_TEXT,"Nama Masakan: "+shareSub+"\n\nLama Masak: "+lama_masak+"\n\nIngredients:\n"+bahan+"\n\nCara Memasak:\n"+cara_masak+"\n\nDeskripsi:\n"+deskripsi+"\n\nLinkVideo:\n"+shareBody);
                 getActivity().startActivity(Intent.createChooser(intent, "Share Using"));
             }
         });
@@ -170,6 +270,7 @@ public class RecipeDetailFragment extends Fragment {
         tv_oleh.setText("By "+this.oleh);
         tv_deskripsi.setText(this.deskripsi);
         tv_lama_masak.setText(String.valueOf(this.lama_masak));
+        tv_like_count.setText(likeCount+" Likes");
 
         komentarRefs.child("komentar").addValueEventListener(new ValueEventListener() {
             @Override
@@ -272,7 +373,7 @@ public class RecipeDetailFragment extends Fragment {
             }
         });
 
-        komentarRefs.addValueEventListener(new ValueEventListener() {
+        /*komentarRefs.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final String likeCount = dataSnapshot.child("likeCount").getValue().toString();
@@ -293,8 +394,8 @@ public class RecipeDetailFragment extends Fragment {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (final DataSnapshot snapshot:dataSnapshot.getChildren()){
-                                Log.d("POKOKNYEINIWOY","qwe: "+snapshot.getKey());
                                 if(snapshot.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                                    Log.d("POKOKNYEINIWOY","qwe: "+snapshot.getKey());
                                     ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
                                     ib_like.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -334,7 +435,77 @@ public class RecipeDetailFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
+
+        /*komentarRefs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final String likeCount = dataSnapshot.child("likeCount").getValue().toString();
+                Log.d("INILIKECOUNTEUY","qwe: "+likeCount);
+                if (likeCount.equals("0")){
+                    ib_like.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
+                            HashMap likeMap = new HashMap();
+                            likeMap.put("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            likeMap.put("email",FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                            komentarRefs.child("like").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(likeMap);
+                            komentarRefs.child("likeCount").setValue(Integer.valueOf(likeCount)+1);
+                            tv_like_count.setText(String.valueOf(Integer.valueOf(likeCount)+1)+" Likes");
+                        }
+                    });
+                }else{
+                    komentarRefs.child("like").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (final DataSnapshot snapshot:dataSnapshot.getChildren()){
+                                Log.d("POKOKNYEINIWOY","qwe: "+snapshot.getKey());
+                                if(snapshot.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                                    Log.d("KEYSAMAKAYAKUIDNIH","qwe: "+snapshot.getKey());
+                                    ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
+                                    ib_like.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite_border));
+                                            komentarRefs.child("likeCount").setValue(Integer.valueOf(likeCount)-1);
+                                            tv_like_count.setText(String.valueOf(Integer.valueOf(likeCount)-1)+" Likes");
+                                            snapshot.getRef().removeValue();
+                                        }
+                                    });
+                                    break;
+                                }else{
+                                    ib_like.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Log.d("KEYBEDAKAYAKUIDNIH","qwe: "+snapshot.getKey());
+                                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
+                                            HashMap likeMap = new HashMap();
+                                            likeMap.put("uid",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                            likeMap.put("email",FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                                            komentarRefs.child("like").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(likeMap);
+                                            komentarRefs.child("likeCount").setValue(Integer.valueOf(likeCount)+1);
+                                            tv_like_count.setText(String.valueOf(Integer.valueOf(likeCount)+1)+" Likes");
+                                        }
+                                    });
+                                    break;
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });*/
 
     }
 

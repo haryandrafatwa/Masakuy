@@ -17,12 +17,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.masakuy.Feature.Auth.LoginActivity;
 import com.example.masakuy.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,6 +38,8 @@ public class SettingFragment extends Fragment {
 
     private AuthCredential authCredential;
     private FirebaseUser firebaseUser;
+
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,9 @@ public class SettingFragment extends Fragment {
 
     private void initialize(){
 
+        bottomNavigationView = getActivity().findViewById(R.id.bottomNavBar);
+        bottomNavigationView.setVisibility(View.GONE);
+
         tv_changePass = getActivity().findViewById(R.id.tv_changepassword);
         tv_about = getActivity().findViewById(R.id.tv_about);
         tv_logout = getActivity().findViewById(R.id.tv_logout);
@@ -67,6 +74,14 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 initializeDialogChangePassword();
+            }
+        });
+
+        tv_about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AboutFragment aboutFragment = new AboutFragment();
+                setFragment(aboutFragment);
             }
         });
 
@@ -196,6 +211,13 @@ public class SettingFragment extends Fragment {
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getActivity().getWindow().clearFlags(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.colorPrimary));
+    }
+
+    private void setFragment(Fragment fragment) // fungsi buat pindah - pindah fragment
+    {
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameFragment,fragment).addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
 }

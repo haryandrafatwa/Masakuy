@@ -23,6 +23,7 @@ import com.example.masakuy.Feature.Beranda.RecipeMore;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeAdapter;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeModel;
 import com.example.masakuy.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,6 +52,8 @@ public class SearchFragment extends Fragment {
 
     private TextView tv_recipe_not_found,tv_recipe_is_empty;
 
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +72,9 @@ public class SearchFragment extends Fragment {
     }
 
     private void initialize(){
+
+        bottomNavigationView = getActivity().findViewById(R.id.bottomNavBar);
+        bottomNavigationView.setVisibility(View.VISIBLE);
 
         et_search = getActivity().findViewById(R.id.et_search);
         recipeRefs = FirebaseDatabase.getInstance().getReference().child("Recipe");
@@ -114,13 +120,13 @@ public class SearchFragment extends Fragment {
                                                 mList.clear();
                                                 snapshot.getRef().orderByKey().addValueEventListener(new ValueEventListener() {
                                                     @Override
-                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    public void onDataChange(@NonNull DataSnapshot dats) {
                                                         recyclerView.setVisibility(View.VISIBLE);
                                                         tv_recipe_not_found.setVisibility(View.GONE);
                                                         tv_recipe_is_empty.setVisibility(View.GONE);
 
-                                                        mList.add(new RecipeModel(dataSnapshot.getKey(),dataSnapshot.child("nama_masakan").getValue().toString(),dataSnapshot.child("bahan").getValue().toString(),dataSnapshot.child("cara_masak").getValue().toString(),
-                                                                Integer.valueOf(dataSnapshot.child("lama_masak").getValue().toString()),dataSnapshot.child("oleh").getValue().toString(),dataSnapshot.child("videoURL").getValue().toString(), dataSnapshot.child("deskripsi").getValue().toString()));
+                                                        mList.add(new RecipeModel(dats.getKey(),dats.child("nama_masakan").getValue().toString(),dats.child("bahan").getValue().toString(),dats.child("cara_masak").getValue().toString(),
+                                                                Integer.valueOf(dats.child("lama_masak").getValue().toString()),dats.child("oleh").getValue().toString(),dats.child("email").getValue().toString(),dats.child("imageURL").getValue().toString(),dats.child("videoURL").getValue().toString(), dats.child("deskripsi").getValue().toString(),Integer.valueOf(dats.child("likeCount").getValue().toString())));
                                                         adapter.notifyDataSetChanged();
 
                                                         recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

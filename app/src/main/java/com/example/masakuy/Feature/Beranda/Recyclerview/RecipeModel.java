@@ -4,19 +4,21 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class RecipeModel implements Parcelable {
-    private String key, nama_masakan, bahan, cara_masak, oleh, deskripsi;
-    private int lama_masak;
-    private String videoURL;
+    private String key, nama_masakan, bahan, cara_masak, oleh, email, deskripsi,imageURL, videoURL;
+    private int lama_masak,likeCount;
 
-    public RecipeModel(String key, String nama_masakan, String bahan, String cara_masak, int lama_masak, String oleh, String videoURL, String deskripsi) {
+    public RecipeModel(String key, String nama_masakan, String bahan, String cara_masak, int lama_masak, String oleh, String email, String imageURL, String videoURL, String deskripsi, int likeCount) {
         this.key = key;
         this.nama_masakan = nama_masakan;
         this.bahan = bahan;
         this.cara_masak = cara_masak;
         this.lama_masak = lama_masak;
         this.oleh = oleh;
+        this.email = email;
+        this.imageURL = imageURL;
         this.videoURL = videoURL;
         this.deskripsi = deskripsi;
+        this.likeCount = likeCount;
     }
 
     protected RecipeModel(Parcel in) {
@@ -25,9 +27,12 @@ public class RecipeModel implements Parcelable {
         bahan = in.readString();
         cara_masak = in.readString();
         oleh = in.readString();
+        email = in.readString();
         lama_masak = in.readInt();
         videoURL = in.readString();
+        imageURL = in.readString();
         deskripsi = in.readString();
+        likeCount = in.readInt();
     }
 
     public static final Creator<RecipeModel> CREATOR = new Creator<RecipeModel>() {
@@ -106,6 +111,30 @@ public class RecipeModel implements Parcelable {
         this.deskripsi = deskripsi;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -118,8 +147,11 @@ public class RecipeModel implements Parcelable {
         parcel.writeString(bahan);
         parcel.writeString(cara_masak);
         parcel.writeString(oleh);
+        parcel.writeString(email);
         parcel.writeString(deskripsi);
         parcel.writeInt(lama_masak);
+        parcel.writeString(imageURL);
         parcel.writeString(videoURL);
+        parcel.writeInt(likeCount);
     }
 }

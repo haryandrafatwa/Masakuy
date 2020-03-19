@@ -1,5 +1,6 @@
 package com.example.masakuy.Feature.Artikel;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.example.masakuy.Feature.Beranda.BerandaFragment;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeAdapter;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeModel;
 import com.example.masakuy.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,6 +48,8 @@ public class ArtikelFragment extends Fragment {
 
     private DatabaseReference artikelRefs;
 
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +70,9 @@ public class ArtikelFragment extends Fragment {
     }
 
     private void initialize(){ // fungsi untuk inisiasi semua object yang ada pada layout artikel
+
+        bottomNavigationView = getActivity().findViewById(R.id.bottomNavBar);
+        bottomNavigationView.setVisibility(View.VISIBLE);
 
         artikelRefs = FirebaseDatabase.getInstance().getReference().child("Artikel");
 
@@ -88,7 +95,7 @@ public class ArtikelFragment extends Fragment {
                     tv_artikel_empty.setVisibility(View.INVISIBLE);
                     mList.clear();
                     for (DataSnapshot dats:dataSnapshot.getChildren()){
-                        mList.add(new ArtikelModel(dats.getKey(),dats.child("artikel_subject").getValue().toString(),dats.child("artikel_body").getValue().toString(),dats.child("image").getValue().toString()));
+                        mList.add(new ArtikelModel(dats.getKey(),dats.child("artikel_subject").getValue().toString(),dats.child("artikel_body").getValue().toString(),dats.child("image").getValue().toString(), Integer.valueOf(dats.child("likeCount").getValue().toString())));
                         adapter.notifyDataSetChanged();
 
                         recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

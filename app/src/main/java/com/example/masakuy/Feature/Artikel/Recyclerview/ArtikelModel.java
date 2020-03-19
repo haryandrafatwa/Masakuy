@@ -5,12 +5,14 @@ import android.os.Parcelable;
 
 public class ArtikelModel implements Parcelable {
     private String key, subject, body, imageURL;
+    private int likeCount;
 
-    public ArtikelModel(String key, String subject, String body, String imageURL) {
+    public ArtikelModel(String key, String subject, String body, String imageURL, int likeCount) {
         this.key = key;
         this.subject = subject;
         this.body = body;
         this.imageURL = imageURL;
+        this.likeCount = likeCount;
     }
 
     protected ArtikelModel(Parcel in) {
@@ -18,6 +20,7 @@ public class ArtikelModel implements Parcelable {
         subject = in.readString();
         body = in.readString();
         imageURL = in.readString();
+        likeCount = in.readInt();
     }
 
     public static final Creator<ArtikelModel> CREATOR = new Creator<ArtikelModel>() {
@@ -64,6 +67,14 @@ public class ArtikelModel implements Parcelable {
         this.imageURL = imageURL;
     }
 
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -75,5 +86,6 @@ public class ArtikelModel implements Parcelable {
         parcel.writeString(subject);
         parcel.writeString(body);
         parcel.writeString(imageURL);
+        parcel.writeInt(likeCount);
     }
 }

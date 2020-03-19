@@ -3,9 +3,11 @@ package com.example.masakuy.Feature.Beranda.Recyclerview;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.masakuy.Feature.Artikel.ArtikelDetailFragment;
 import com.example.masakuy.Feature.Beranda.RecipeDetailFragment;
 import com.example.masakuy.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,10 +55,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         try{
             viewHolder.tv_nama_masakan.setText(model.getNama_masakan());
 
-
-            viewHolder.vv_item.setVideoURI(Uri.parse(model.getVideoURL()));
-            viewHolder.vv_item.seekTo(5000);
-//            viewHolder.iv_item.setBackground(new BitmapDrawable(retriveVideoFrameFromVideo(model.getVideoURL())));
+            Log.d("KOKODAKD",model.getImageURL());
+            Picasso.get().load(model.getImageURL()).fit().into(viewHolder.iv_item);
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -86,14 +87,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tv_nama_masakan;
-        CardView iv_item;
-        VideoView vv_item;
+        ImageView iv_item;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tv_nama_masakan = (TextView) itemView.findViewById(R.id.tv_item_name);
-//            iv_item = (CardView) itemView.findViewById(R.id.cvItemListSetoran);
-            vv_item = itemView.findViewById(R.id.vv_resep_makanan);
+            iv_item = itemView.findViewById(R.id.iv_resep_makanan);
         }
     }
 }

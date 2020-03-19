@@ -11,15 +11,10 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.masakuy.Feature.Beranda.BerandaFragment;
 import com.example.masakuy.Feature.Artikel.ArtikelFragment;
 import com.example.masakuy.Feature.Profile.ProfileFragment;
-import com.example.masakuy.Feature.Recipe.RecipeFragment;
+import com.example.masakuy.Feature.Tambah.PilihInputFragment;
 import com.example.masakuy.Feature.Search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,28 +22,12 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     public static Context contextOfApplication;
     private DatabaseReference databaseReference;
-    private String tBag="";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild("trashbag"))
-                {
-                    tBag = dataSnapshot.child("trashbag").getValue().toString();
-                }
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
         contextOfApplication = getApplicationContext();
 
         setContentView(R.layout.activity_main);
@@ -57,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         final ArtikelFragment artikelFragment = new ArtikelFragment();
         final SearchFragment searchFragment = new SearchFragment();
         final BerandaFragment berandaFragment = new BerandaFragment();
-        final RecipeFragment recipeFragment = new RecipeFragment();
+        final PilihInputFragment pilihInputFragment = new PilihInputFragment();
         final ProfileFragment profileFragment = new ProfileFragment();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
@@ -74,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     setFragment(berandaFragment);
                     return true;
                 } else if (id == R.id.menuRecipe) {
-                    setFragment(recipeFragment);
+                    setFragment(pilihInputFragment);
                     return true;
                 } else if (id == R.id.menuSearch) {
                     setFragment(searchFragment);

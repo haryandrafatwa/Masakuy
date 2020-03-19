@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/tv_recipe_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="32dp">
+
+            <ImageView
+                android:id="@+id/iv_food_recipe"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/recipe"/>
+
+            <RelativeLayout
+                android:id="@+id/layout_recipe_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/iv_food_recipe"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp">
+                <TextView
+                    android:id="@+id/tv_recipe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tambah Recipe"
+                    android:textSize="24sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@drawable/separator"
+                    android:layout_below="@id/tv_recipe"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_recipe_title"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:id="@+id/tv_tambahkanvideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tambahkan Foto masakan Anda:"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
+
+            <RelativeLayout
+                android:id="@+id/layout_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_tambahkanvideo"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:id="@+id/iv_foto_resep"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="invisible"/>
+
+                <ImageButton
+                    android:id="@+id/btn_add_foto_resep"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/ic_add_circle"
+                    android:layout_centerInParent="true" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_hapus_foto_resep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hapus Foto"
+                android:layout_below="@id/layout_video"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/black"
+                android:clickable="true"/>
+
+            <TextView
+                android:id="@+id/tv_nama_masakan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nama Masakan"
+                android:textColor="@color/black"
+                android:layout_below="@+id/tv_hapus_foto_resep"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/et_nama_masakan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_putih"
+                android:layout_below="@id/tv_nama_masakan"
+                android:padding="10dp"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_bahan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bahan"
+                android:textColor="@color/black"
+                android:layout_below="@+id/et_nama_masakan"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/et_bahan"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/bg_edittext_putih"
+                android:layout_below="@id/tv_bahan"
+                android:padding="10dp"
+                android:inputType="textMultiLine"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="top|left"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_cara_masak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cara Memasak"
+                android:textColor="@color/black"
+                android:layout_below="@+id/et_bahan"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/et_cara_masak"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/bg_edittext_putih"
+                android:layout_below="@id/tv_cara_masak"
+                android:padding="10dp"
+                android:inputType="textMultiLine"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="top|left"
+                android:textSize="14sp"/>
+
+            <Button
+                android:id="@+id/btn_next_resep"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="Next"
+                android:layout_below="@+id/et_cara_masak"
+                android:background="@drawable/bg_btn_yellow"
+                android:textColorHint="@color/black"
+                android:textSize="16sp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>

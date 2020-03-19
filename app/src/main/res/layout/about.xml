@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".splashscreen1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ic_logo_wth_name"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MasaKuy merupakan aplikasi berbasis android yang berisi kumpulan resep dari berbagai kategori, tutorial, belanja bahan baku, dan artikel sebagai inspirasi untuk memasak."
+            android:layout_marginHorizontal="20dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/black"
+            android:background="@drawable/bg_tv_white_transp"
+            android:layout_marginTop="32dp"
+            android:padding="20dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

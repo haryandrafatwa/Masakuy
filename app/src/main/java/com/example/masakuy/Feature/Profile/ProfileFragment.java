@@ -22,6 +22,7 @@ import com.example.masakuy.Feature.Beranda.BerandaFragment;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeAdapter;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeModel;
 import com.example.masakuy.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,19 +46,21 @@ public class ProfileFragment extends Fragment {
         void onLayoutReady();
     }
 
+    private String username, email;
     private ImageButton ib_setting;
     private CircleImageView circleImageView;
     private TextView tv_username,tv_riwayat_kosong;
     private ProgressBar pb_photo,pb_riwayat;
 
-    private DatabaseReference userRefs;
+    private DatabaseReference userRefs,recipeRefs;
 
-    private RecyclerView rvListFood;
+    private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<RecipeModel> mList = new ArrayList<>();
     private List<RecipeModel> reverse = new ArrayList<>();
 
+    private BottomNavigationView bottomNavigationView;
     private SettingFragment settingFragment;
 
     @Override
@@ -79,6 +82,9 @@ public class ProfileFragment extends Fragment {
     }
 
     private void initialize(){
+
+        bottomNavigationView = getActivity().findViewById(R.id.bottomNavBar);
+        bottomNavigationView.setVisibility(View.VISIBLE);
 
         settingFragment = new SettingFragment();
 
@@ -111,6 +117,8 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                username = dataSnapshot.child("username").getValue().toString();
+                email = dataSnapshot.child("email").getValue().toString();
                 tv_username.setText(dataSnapshot.child("username").getValue().toString());
 
                 if(dataSnapshot.hasChild("displayPicture")){
@@ -137,7 +145,9 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        userRefs.child("recipe").orderByKey().addValueEventListener(new ValueEventListener() {
+        recipeRefs = FirebaseDatabase.getInstance().getReference().child("Recipe");
+
+        recipeRefs.orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getChildrenCount()!=0){
@@ -145,21 +155,24 @@ public class ProfileFragment extends Fragment {
                     mList.clear();
                     reverse.clear();
                     for (DataSnapshot dats:dataSnapshot.getChildren()){
-                        mList.add(new RecipeModel(dats.getKey(),dats.child("nama_masakan").getValue().toString(),dats.child("bahan").getValue().toString(),dats.child("cara_masak").getValue().toString(),
-                                Integer.valueOf(dats.child("lama_masak").getValue().toString()),dats.child("oleh").getValue().toString(),dats.child("videoURL").getValue().toString(), dats.child("deskripsi").getValue().toString()));
-                        adapter.notifyDataSetChanged();
+                        String emailRecipe = dats.child("email").getValue().toString().toLowerCase();
+                        String usernameRecipe = dats.child("oleh").getValue().toString().toLowerCase();
+                        if (emailRecipe.equals(email.toLowerCase()) && usernameRecipe.equals(username.toLowerCase())){
+                            mList.add(new RecipeModel(dats.getKey(),dats.child("nama_masakan").getValue().toString(),dats.child("bahan").getValue().toString(),dats.child("cara_masak").getValue().toString(),
+                                    Integer.valueOf(dats.child("lama_masak").getValue().toString()),dats.child("oleh").getValue().toString(),dats.child("email").getValue().toString(),dats.child("imageURL").getValue().toString(),dats.child("videoURL").getValue().toString(), dats.child("deskripsi").getValue().toString(),Integer.valueOf(dats.child("likeCount").getValue().toString())));
+                            adapter.notifyDataSetChanged();
 
-                        rvListFood.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                            @Override
-                            public void onGlobalLayout() {
-                                if(recyclerViewReadyCallback != null){
-                                    recyclerViewReadyCallback.onLayoutReady();
+                            recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                                @Override
+                                public void onGlobalLayout() {
+                                    if(recyclerViewReadyCallback != null){
+                                        recyclerViewReadyCallback.onLayoutReady();
+                                    }
+                                    recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                                 }
-                                rvListFood.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                            }
-                        });
+                            });
+                        }
                     }
-
                     for (int i = 0; i < mList.size(); i++) {
                         Log.d("mList ===>",mList.get(i).getNama_masakan());
                     }
@@ -169,7 +182,6 @@ public class ProfileFragment extends Fragment {
                         Log.d("reverse ===>",reverse.get(i).getNama_masakan());
                     }
                 }else{
-                    rvListFood.setAdapter(null);
                     tv_riwayat_kosong.setVisibility(View.VISIBLE);
                     pb_riwayat.setVisibility(View.GONE);
                 }
@@ -185,11 +197,11 @@ public class ProfileFragment extends Fragment {
 
     private void initRecyclerView(){
 
-        rvListFood = getActivity().findViewById(R.id.rv_riwayat);
+        recyclerView = getActivity().findViewById(R.id.rv_riwayat);
         adapter = new RecipeAdapter(reverse,getActivity().getApplicationContext(),getActivity());
         mLayoutManager = new GridLayoutManager(getActivity(),2);
-        rvListFood.setLayoutManager(mLayoutManager);
-        rvListFood.setAdapter(adapter);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
     private void setStatusBar(){
@@ -198,10 +210,10 @@ public class ProfileFragment extends Fragment {
         getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.colorPrimary));
     }
 
-    public void setFragment(Fragment fragment) // fungsi buat pindah - pindah fragment
+    private void setFragment(Fragment fragment) // fungsi buat pindah - pindah fragment
     {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frameFragment,fragment);
+        fragmentTransaction.replace(R.id.frameFragment,fragment).addToBackStack(null);
         fragmentTransaction.commit();
     }
 

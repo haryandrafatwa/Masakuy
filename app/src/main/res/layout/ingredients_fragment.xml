@@ -1,20 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:layout_marginHorizontal="32dp">
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_ingredients_recipe_detail"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="300dp"
-        android:inputType="textMultiLine"
-        android:layout_centerInParent="true"
-        android:textColor="@color/black"
-        android:fontFamily="@font/poppins_regular"
-        android:gravity="top|left"
-        android:padding="12dp"
-        android:background="@drawable/bg_tv_white_transp"
-        android:justificationMode="inter_word"/>
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginHorizontal="32dp">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_edit_ingredients"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Ingredients"
+            android:fontFamily="@font/poppins_light"
+            android:layout_alignParentEnd="true"
+
+            android:layout_marginBottom="8dp"
+            android:clickable="true"/>
+
+        <EditText
+            android:id="@+id/tv_ingredients_recipe_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="300dp"
+            android:inputType="textMultiLine"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="top|left"
+            android:focusable="false"
+            android:padding="12dp"
+            android:background="@drawable/bg_tv_white_transp"
+            android:layout_below="@id/tv_edit_ingredients"
+            android:justificationMode="inter_word"/>
+
+        <Button
+            android:id="@+id/btn_update_ingredients_resep"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Update"
+            android:layout_below="@+id/tv_ingredients_recipe_detail"
+            android:background="@drawable/bg_btn_yellow"
+            android:textColorHint="@color/black"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>

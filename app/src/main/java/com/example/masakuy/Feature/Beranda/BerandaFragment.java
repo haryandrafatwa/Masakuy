@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeAdapter;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeModel;
 import com.example.masakuy.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,6 +56,8 @@ public class BerandaFragment extends Fragment {
 
     private DatabaseReference recipeRefs;
 
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +78,9 @@ public class BerandaFragment extends Fragment {
     }
 
     private void initialize(){ // fungsi untuk inisiasi semua object yang ada pada layout beranda
+
+        bottomNavigationView = getActivity().findViewById(R.id.bottomNavBar);
+        bottomNavigationView.setVisibility(View.VISIBLE);
 
         recipeRefs = FirebaseDatabase.getInstance().getReference().child("Recipe");
 
@@ -107,7 +114,7 @@ public class BerandaFragment extends Fragment {
                     reverse.clear();
                     for (DataSnapshot dats:dataSnapshot.getChildren()){
                         mList.add(new RecipeModel(dats.getKey(),dats.child("nama_masakan").getValue().toString(),dats.child("bahan").getValue().toString(),dats.child("cara_masak").getValue().toString(),
-                                Integer.valueOf(dats.child("lama_masak").getValue().toString()),dats.child("oleh").getValue().toString(),dats.child("videoURL").getValue().toString(), dats.child("deskripsi").getValue().toString()));
+                                Integer.valueOf(dats.child("lama_masak").getValue().toString()),dats.child("oleh").getValue().toString(),dats.child("email").getValue().toString(),dats.child("imageURL").getValue().toString(),dats.child("videoURL").getValue().toString(), dats.child("deskripsi").getValue().toString(), Integer.valueOf(dats.child("likeCount").getValue().toString())));
                         adapter.notifyDataSetChanged();
 
                         rvListFood.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

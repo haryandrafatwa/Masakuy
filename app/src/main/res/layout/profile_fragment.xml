@@ -56,7 +56,6 @@
             android:id="@+id/tv_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="KazeKana"
             android:layout_below="@id/layout_photoprofile"
             android:textSize="30sp"
             android:fontFamily="@font/poppins_medium"

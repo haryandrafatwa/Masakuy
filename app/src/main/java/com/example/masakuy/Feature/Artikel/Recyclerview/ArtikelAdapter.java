@@ -92,7 +92,7 @@ public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ViewHold
     public void setFragment(Fragment fragment) // fungsi buat pindah - pindah fragment
     {
         FragmentTransaction fragmentTransaction = mActivity.getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frameFragment,fragment);
+        fragmentTransaction.replace(R.id.frameFragment,fragment).addToBackStack(null);
         fragmentTransaction.commit();
     }
 
