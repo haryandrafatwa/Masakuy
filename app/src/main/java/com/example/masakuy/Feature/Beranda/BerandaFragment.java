@@ -48,7 +48,7 @@ public class BerandaFragment extends Fragment {
     private List<RecipeModel> mList = new ArrayList<>();
     private List<RecipeModel> reverse = new ArrayList<>();
     private ProgressBar progressBar;
-    private ImageButton ib_recipe;
+    private ImageButton ib_recipe, btn_supermarket;
 
     private RecipeMore recipeMore;
 
@@ -87,6 +87,7 @@ public class BerandaFragment extends Fragment {
         progressBar = getActivity().findViewById(R.id.pb_food_recipe);
         tv_recipe_empty = getActivity().findViewById(R.id.tv_recipe_empty);
         ib_recipe = getActivity().findViewById(R.id.ib_arrow_more_recipe);
+        btn_supermarket = getActivity().findViewById(R.id.btn_supermarket_beranda);
 
         recyclerViewReadyCallback = new RecyclerViewReadyCallback() {
             @Override
@@ -100,6 +101,14 @@ public class BerandaFragment extends Fragment {
             public void onClick(View view) {
                 recipeMore = new RecipeMore();
                 setFragment(recipeMore);
+            }
+        });
+
+        btn_supermarket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PilihBahanBaku pilihBahanBaku = new PilihBahanBaku();
+                setFragment(pilihBahanBaku);
             }
         });
 

@@ -116,17 +116,10 @@
                     android:id="@+id/tv_spice_shop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Spice Shop"
-                    android:textSize="24sp"
+                    android:text="Supermarket Masakuy"
+                    android:textSize="20sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppins_regular"/>
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_arrow_forward"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"/>
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -143,24 +136,15 @@
             android:layout_below="@+id/tv_spice_title"
             android:layout_marginTop="24dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp">
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="30dp">
 
-            <!--<androidx.recyclerview.widget.RecyclerView
+            <ImageButton
+                android:id="@+id/btn_supermarket_beranda"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:listitem="@layout/recipe_list"
-                tools:itemCount="2"/>-->
+                android:layout_height="200dp"
+                android:background="@drawable/bg_btn_supermarket"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Shop is Empty"
-                android:textSize="24sp"
-                android:layout_centerInParent="true"
-                android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/black"
-                android:visibility="invisible"/>
         </RelativeLayout>
 
     </RelativeLayout>
