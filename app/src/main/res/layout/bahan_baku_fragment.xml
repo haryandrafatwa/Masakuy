@@ -1,110 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_bahan_baku"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@android:color/transparent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/judul_bahan_makanan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sayuran"
+                    android:textSize="26sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <ImageButton
+                    android:id="@+id/ib_cart"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/ic_shopping_cart"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"/>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
 
         <RelativeLayout
-            android:id="@+id/layout_sayuran"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/bg_tv_white_transp_radius">
+            android:layout_below="@id/toolbar_bahan_baku"
+            android:layout_marginTop="8dp">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_bahan_baku"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="32dp"
+                tools:listitem="@layout/list_bahan_baku"
+                tools:itemCount="2"/>
+            
             <TextView
-                android:id="@+id/tv_sayuran_bb"
+                android:id="@+id/tv_produk_empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:text="Sayuran"
+                android:text="Produk kosong!"
                 android:textSize="24sp"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/black"/>
+                android:layout_centerInParent="true"
+                android:visibility="invisible"/>
 
-            <ImageButton
-                android:id="@+id/btn_sayuran_bb"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:background="@drawable/sayur"
-                android:layout_below="@id/tv_sayuran_bb"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/layout_daging"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_below="@id/layout_sayuran"
-            android:background="@drawable/bg_tv_white_transp_radius">
-
-            <TextView
-                android:id="@+id/tv_daging_bb"
+            <ProgressBar
+                android:id="@+id/pb_produk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:text="Daging"
-                android:textSize="24sp"
-                android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/black"/>
-
-            <ImageButton
-                android:id="@+id/btn_daging_bb"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:background="@drawable/daging"
-                android:layout_below="@id/tv_daging_bb"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"/>
+                android:layout_centerInParent="true"/>
 
         </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/layout_bumbu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_below="@id/layout_daging"
-            android:layout_marginBottom="32dp"
-            android:background="@drawable/bg_tv_white_transp_radius">
-
-            <TextView
-                android:id="@+id/tv_bumbu_bb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:text="Bumbu"
-                android:textSize="24sp"
-                android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/black"/>
-
-            <ImageButton
-                android:id="@+id/btn_bumbu_bb"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:background="@drawable/bumbu"
-                android:layout_below="@id/tv_bumbu_bb"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"/>
-
-        </RelativeLayout>
-
+        
     </RelativeLayout>
-
+    
 </androidx.core.widget.NestedScrollView>

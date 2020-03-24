@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
@@ -20,9 +19,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class PilihBahanBaku extends Fragment {
 
     private ImageButton ib_sayur,ib_daging, ib_bumbu;
-    private AddRecipe1Fragment addRecipe1Fragment;
-    private AddArtikelFragment addArtikelFragment;
-    private AddProdukFragment addProdukFragment;
+
+    private BahanBakuFragment bahanBakuFragment;
 
     private BottomNavigationView bottomNavigationView;
 
@@ -34,7 +32,7 @@ public class PilihBahanBaku extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.bahan_baku_fragment, container, false);
+        return inflater.inflate(R.layout.pilih_bahan_baku_fragment, container, false);
     }
 
     @Override
@@ -53,28 +51,36 @@ public class PilihBahanBaku extends Fragment {
         ib_daging = getActivity().findViewById(R.id.btn_daging_bb);
         ib_bumbu = getActivity().findViewById(R.id.btn_bumbu_bb);
 
-        addRecipe1Fragment = new AddRecipe1Fragment();
-        addArtikelFragment = new AddArtikelFragment();
-        addProdukFragment = new AddProdukFragment();
-
         ib_sayur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setFragment(addRecipe1Fragment);
+                bahanBakuFragment = new BahanBakuFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("jenis","Sayuran");
+                bahanBakuFragment.setArguments(bundle);
+                setFragment(bahanBakuFragment);
             }
         });
 
         ib_daging.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setFragment(addArtikelFragment);
+                bahanBakuFragment = new BahanBakuFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("jenis","Daging");
+                bahanBakuFragment.setArguments(bundle);
+                setFragment(bahanBakuFragment);
             }
         });
 
         ib_bumbu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setFragment(addProdukFragment);
+                bahanBakuFragment = new BahanBakuFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("jenis","Bumbu");
+                bahanBakuFragment.setArguments(bundle);
+                setFragment(bahanBakuFragment);
             }
         });
 
