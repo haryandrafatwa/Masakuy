@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_checkout"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@android:color/transparent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Checkout"
+                android:textSize="24sp"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/tv_daftar_belanja"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daftar Belanja"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_below="@id/toolbar_checkout"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"/>
+
+        <RelativeLayout
+            android:id="@+id/layout_daftar_belanja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_below="@+id/tv_daftar_belanja"
+            android:background="@drawable/bg_tv_white_transp_radius"
+            android:padding="16dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_checkout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/checkout_item"
+                tools:itemCount="2"/>
+
+            <ProgressBar
+                android:id="@+id/pb_checkout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="Subtotal"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_below="@id/rv_checkout"/>
+
+            <TextView
+                android:id="@+id/tv_subtotal_checkout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text=""
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/rv_checkout"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_courier_checkout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Courier"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_below="@id/layout_daftar_belanja"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"/>
+
+        <RelativeLayout
+            android:id="@+id/layout_courier"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_below="@+id/tv_courier_checkout"
+            android:background="@drawable/bg_tv_white_transp_radius"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_nama_courier_checkout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="Muhammad Arif"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"/>
+
+            <TextView
+                android:id="@+id/tv_alamat_courier_checkout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="Jl. Balendah"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_below="@id/tv_nama_courier_checkout"/>
+
+            <TextView
+                android:id="@+id/tv_nohp_courier_checkout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="08119548462"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_below="@id/tv_alamat_courier_checkout"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="Rp -"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_below="@id/tv_nama_courier_checkout"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Total payment"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_below="@id/layout_courier"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_total_checkout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text=""
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/layout_courier"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/btn_checkout_checkout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Checkout"
+            android:textAllCaps="false"
+            android:background="@drawable/bg_btn_yellow"
+            android:textColorHint="@color/black"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="16sp"
+            android:layout_below="@+id/tv_total_checkout"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"/>
+
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>

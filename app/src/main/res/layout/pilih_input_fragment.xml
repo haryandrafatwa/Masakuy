@@ -27,7 +27,8 @@
                 android:text="Silahkan Pilih salah satu menu yang ingin anda tambahkan"
                 android:textSize="16sp"
                 android:fontFamily="@font/poppins_medium"
-                android:layout_marginLeft="8dp"/>
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 
@@ -65,7 +66,8 @@
             android:textColorHint="@color/black"
             android:fontFamily="@font/poppins_regular"
             android:textSize="16sp"
-            android:layout_marginTop="32dp"/>
+            android:layout_marginTop="32dp"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

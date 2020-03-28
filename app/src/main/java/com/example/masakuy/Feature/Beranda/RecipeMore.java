@@ -91,7 +91,7 @@ public class RecipeMore extends Fragment {
 
         initRecyclerView();
 
-        /*recipeRefs.orderByKey().addValueEventListener(new ValueEventListener() {
+        recipeRefs.orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getChildrenCount()!=0){
@@ -100,7 +100,7 @@ public class RecipeMore extends Fragment {
                     reverse.clear();
                     for (DataSnapshot dats:dataSnapshot.getChildren()){
                         mList.add(new RecipeModel(dats.getKey(),dats.child("nama_masakan").getValue().toString(),dats.child("bahan").getValue().toString(),dats.child("cara_masak").getValue().toString(),
-                                Integer.valueOf(dats.child("lama_masak").getValue().toString()),dats.child("oleh").getValue().toString(),dats.child("videoURL").getValue().toString(), dats.child("deskripsi").getValue().toString()));
+                                Integer.valueOf(dats.child("lama_masak").getValue().toString()),dats.child("oleh").getValue().toString(),dats.child("email").getValue().toString(),dats.child("imageURL").getValue().toString(),dats.child("videoURL").getValue().toString(), dats.child("deskripsi").getValue().toString(), Integer.valueOf(dats.child("likeCount").getValue().toString())));
                         adapter.notifyDataSetChanged();
 
                         rvListFood.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -131,7 +131,7 @@ public class RecipeMore extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
+        });
     }
 
     private void initRecyclerView(){ // fungsi buat bikin object list resep makanan

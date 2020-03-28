@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_cart"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@android:color/transparent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cart"
+                android:textSize="28sp"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <RelativeLayout
+            android:id="@+id/layout_rv_cart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar_cart"
+            android:layout_marginHorizontal="16dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_cart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                tools:listitem="@layout/cart_item"
+                tools:itemCount="2"/>
+
+            <TextView
+                android:id="@+id/tv_cart_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cart is empty!"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/poppins_medium"
+                android:visibility="invisible"/>
+
+            <ProgressBar
+                android:id="@+id/pb_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_resume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_rv_cart"
+            android:background="@drawable/bg_tv_white_radius"
+            android:elevation="6dp"
+            android:layout_marginHorizontal="16dp"
+            android:padding="10dp"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:id="@+id/layout_resume_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="16dp">
+
+                <TextView
+                    android:id="@+id/tv_subtotal_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <TextView
+                    android:id="@+id/tv_shipping_cost_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_below="@id/tv_subtotal_cart"
+                    android:layout_alignEnd="@id/tv_subtotal_cart"/>
+
+                <TextView
+                    android:id="@+id/tv_total_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_below="@id/tv_shipping_cost_cart"
+                    android:layout_alignEnd="@id/tv_subtotal_cart"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="32dp"
+                android:layout_toLeftOf="@+id/layout_resume_right">
+
+                <TextView
+                    android:id="@+id/tv_title_subtotal_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Subtotal:"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_alignEnd="@id/tv_title_shipping_cost_cart"/>
+
+                <TextView
+                    android:id="@+id/tv_title_shipping_cost_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shipping cost:"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_below="@id/tv_title_subtotal_cart"/>
+
+                <TextView
+                    android:id="@+id/tv_title_total_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total price:"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_below="@id/tv_title_shipping_cost_cart"
+                    android:layout_alignEnd="@id/tv_title_shipping_cost_cart"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_placeorder_cart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Place Order"
+            android:textAllCaps="false"
+            android:background="@drawable/bg_btn_yellow"
+            android:textColorHint="@color/black"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="16sp"
+            android:layout_below="@+id/layout_resume"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>
