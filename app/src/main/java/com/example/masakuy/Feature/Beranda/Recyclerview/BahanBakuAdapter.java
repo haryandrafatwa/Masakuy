@@ -185,4 +185,9 @@ public class BahanBakuAdapter extends RecyclerView.Adapter<BahanBakuAdapter.View
             btn_add = itemView.findViewById(R.id.btn_tambah_produk);
         }
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
 }

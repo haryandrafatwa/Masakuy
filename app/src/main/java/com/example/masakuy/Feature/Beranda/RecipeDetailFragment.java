@@ -155,34 +155,62 @@ public class RecipeDetailFragment extends Fragment {
             }
         });
 
-        komentarRefs.child("like").addValueEventListener(new ValueEventListener() {
+        komentarRefs.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(final DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getChildrenCount() == 0){
-                    ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite_border));
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final String likeCount = dataSnapshot.child("likeCount").getValue().toString();
+                if (likeCount.equals("0")){
                     ib_like.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
                             HashMap likeMap = new HashMap();
                             likeMap.put("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
                             likeMap.put("email",FirebaseAuth.getInstance().getCurrentUser().getEmail());
                             komentarRefs.child("like").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(likeMap);
-                            komentarRefs.child("likeCount").setValue(dataSnapshot.getChildrenCount()+1);
-                            tv_like_count.setText((dataSnapshot.getChildrenCount()+1)+" Likes");
+                            komentarRefs.child("likeCount").setValue(Integer.valueOf(likeCount)+1);
+                            tv_like_count.setText(String.valueOf(Integer.valueOf(likeCount)+1)+" Likes");
                         }
                     });
                 }else{
-                    for (DataSnapshot dats: dataSnapshot.getChildren()){
-                        if (dats.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
-                            komentarRefs.child("likeCount").setValue(dataSnapshot.getChildrenCount()-1);
-                            tv_like_count.setText((dataSnapshot.getChildrenCount()-1)+" Likes");
-                            dats.getRef().removeValue();
-                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite_border));
-                        }else{
-                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite_border));
+                    komentarRefs.child("like").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (final DataSnapshot snapshot:dataSnapshot.getChildren()){
+                                Log.d("k-iaojreqjepqiej",snapshot.getKey()+"");
+                                if(snapshot.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                                    ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
+                                    ib_like.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite_border));
+                                            komentarRefs.child("likeCount").setValue(Integer.valueOf(likeCount)-1);
+                                            tv_like_count.setText(String.valueOf(Integer.valueOf(likeCount)-1)+" Likes");
+                                            snapshot.getRef().removeValue();
+                                        }
+                                    });
+                                }else{
+                                    ib_like.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
+                                            HashMap likeMap = new HashMap();
+                                            likeMap.put("uid",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                            likeMap.put("email",FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                                            komentarRefs.child("like").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(likeMap);
+                                            komentarRefs.child("likeCount").setValue(Integer.valueOf(likeCount)+1);
+                                            tv_like_count.setText(String.valueOf(Integer.valueOf(likeCount)+1)+" Likes");
+                                        }
+                                    });
+                                }
+                            }
                         }
-                    }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
             }
 
@@ -372,140 +400,6 @@ public class RecipeDetailFragment extends Fragment {
                 videoView.setMediaController(mediaController);
             }
         });
-
-        /*komentarRefs.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                final String likeCount = dataSnapshot.child("likeCount").getValue().toString();
-                if (likeCount.equals("0")){
-                    ib_like.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
-                            HashMap likeMap = new HashMap();
-                            likeMap.put("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            likeMap.put("email",FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                            komentarRefs.child("like").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(likeMap);
-                            komentarRefs.child("likeCount").setValue(Integer.valueOf(likeCount)+1);
-                        }
-                    });
-                }else{
-                    komentarRefs.child("like").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (final DataSnapshot snapshot:dataSnapshot.getChildren()){
-                                if(snapshot.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                                    Log.d("POKOKNYEINIWOY","qwe: "+snapshot.getKey());
-                                    ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
-                                    ib_like.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite_border));
-                                            komentarRefs.child("likeCount").setValue(Integer.valueOf(likeCount)-1);
-                                            snapshot.getRef().removeValue();
-                                        }
-                                    });
-                                    break;
-                                }else{
-                                    ib_like.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
-                                            HashMap likeMap = new HashMap();
-                                            likeMap.put("uid",FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                            likeMap.put("email",FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                                            komentarRefs.child("like").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(likeMap);
-                                            komentarRefs.child("likeCount").setValue(Integer.valueOf(likeCount)+1);
-                                        }
-                                    });
-                                    break;
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
-
-        /*komentarRefs.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                final String likeCount = dataSnapshot.child("likeCount").getValue().toString();
-                Log.d("INILIKECOUNTEUY","qwe: "+likeCount);
-                if (likeCount.equals("0")){
-                    ib_like.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
-                            HashMap likeMap = new HashMap();
-                            likeMap.put("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            likeMap.put("email",FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                            komentarRefs.child("like").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(likeMap);
-                            komentarRefs.child("likeCount").setValue(Integer.valueOf(likeCount)+1);
-                            tv_like_count.setText(String.valueOf(Integer.valueOf(likeCount)+1)+" Likes");
-                        }
-                    });
-                }else{
-                    komentarRefs.child("like").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (final DataSnapshot snapshot:dataSnapshot.getChildren()){
-                                Log.d("POKOKNYEINIWOY","qwe: "+snapshot.getKey());
-                                if(snapshot.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                                    Log.d("KEYSAMAKAYAKUIDNIH","qwe: "+snapshot.getKey());
-                                    ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
-                                    ib_like.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite_border));
-                                            komentarRefs.child("likeCount").setValue(Integer.valueOf(likeCount)-1);
-                                            tv_like_count.setText(String.valueOf(Integer.valueOf(likeCount)-1)+" Likes");
-                                            snapshot.getRef().removeValue();
-                                        }
-                                    });
-                                    break;
-                                }else{
-                                    ib_like.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            Log.d("KEYBEDAKAYAKUIDNIH","qwe: "+snapshot.getKey());
-                                            ib_like.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
-                                            HashMap likeMap = new HashMap();
-                                            likeMap.put("uid",FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                            likeMap.put("email",FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                                            komentarRefs.child("like").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(likeMap);
-                                            komentarRefs.child("likeCount").setValue(Integer.valueOf(likeCount)+1);
-                                            tv_like_count.setText(String.valueOf(Integer.valueOf(likeCount)+1)+" Likes");
-                                        }
-                                    });
-                                    break;
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
 
     }
 
