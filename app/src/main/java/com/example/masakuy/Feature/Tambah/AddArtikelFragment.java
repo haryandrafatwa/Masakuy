@@ -116,6 +116,7 @@ public class AddArtikelFragment extends Fragment {
 
     }
 
+    //Todo: "addArtikel" atau "add..." method buat nambahin artikel ke firebase database, prosesnya kayak dibawah
     private void addArtikel(){
         if(TextUtils.isEmpty(et_judul.getText().toString()) && TextUtils.isEmpty(et_content.getText().toString())){
             Toast.makeText(getActivity(), "Data harus diisi terlebih dahulu", Toast.LENGTH_SHORT).show();
@@ -148,6 +149,7 @@ public class AddArtikelFragment extends Fragment {
         }
     }
 
+    //Todo: uploadImage/uploadVideo itu buat ngeupload foto/video ke firebase storage trus link download si foto/video-nya ditaro juga ke firebase database biar gampang di load
     private void uploadImage(final String itemCountRecipe) {
 
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -187,12 +189,14 @@ public class AddArtikelFragment extends Fragment {
                 });
     }
 
+    //Todo: choosePhotoFromGallery ini buat ngeintent/pindah  ke halaman galeri foto di hp kita
     private void choosePhotoFromGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(Intent.createChooser(galleryIntent, "Select Photo"), 1 );
     }
 
+    //Todo: onActivityResult ini buat nampilin hasil dari seleksi foto oleh si user, fotonya itu ditampilin ke halamannya
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

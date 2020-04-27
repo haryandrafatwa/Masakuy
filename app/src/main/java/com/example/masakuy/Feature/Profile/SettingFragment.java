@@ -200,6 +200,7 @@ public class SettingFragment extends Fragment {
 
     }
 
+    //Todo: method closeActivity itu sama hal nya kayak setActivity, yg ngebedain, close Activity itu mulai si activitynya dr awal lg, kalo setActivity aja, dia cuma pindah aja
     private void closeActivity(Class activity) { // fungsi untuk kelarin activity terakhir, dan diganti ke activity baru trus dikirim ke halaman login
         Intent mainIntent = new Intent(getActivity(), activity);
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

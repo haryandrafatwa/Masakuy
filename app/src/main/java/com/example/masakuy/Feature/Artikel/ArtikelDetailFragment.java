@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.masakuy.Feature.Artikel.Recyclerview.ArtikelModel;
-import com.example.masakuy.Feature.Beranda.RecipeMore;
+import com.example.masakuy.Feature.Beranda.ResepMakanan.RecipeMore;
 import com.example.masakuy.Feature.Beranda.Recyclerview.KomentarAdapter;
 import com.example.masakuy.Feature.Beranda.Recyclerview.KomentarModel;
 import com.example.masakuy.R;

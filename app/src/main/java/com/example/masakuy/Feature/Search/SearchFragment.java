@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.masakuy.Feature.Beranda.RecipeMore;
+import com.example.masakuy.Feature.Beranda.ResepMakanan.RecipeMore;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeAdapter;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeModel;
 import com.example.masakuy.R;
@@ -92,6 +92,7 @@ public class SearchFragment extends Fragment {
 
         initRecyclerView();
 
+        //Todo:method ini buat ketika user selesai ngetik atau mencet enter, nanti proses searching langsung dijalanin, tanpa harus teken tombol search
         et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {

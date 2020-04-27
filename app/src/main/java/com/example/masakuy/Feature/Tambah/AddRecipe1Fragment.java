@@ -118,6 +118,7 @@ public class AddRecipe1Fragment extends Fragment {
         });
     }
 
+    //Todo: checkInput itu buat ngecek apakah inputan ada yg kosong apa engga, kalo engga dia lanjut ke proses berikutnya
     private void checkInput(){
         if(TextUtils.isEmpty(et_nama_masakan.getText().toString()) && TextUtils.isEmpty(et_bahan.getText().toString()) && TextUtils.isEmpty(et_cara_masak.getText().toString())){
             Toast.makeText(getActivity(), "Data harus diisi terlebih dahulu", Toast.LENGTH_SHORT).show();
@@ -132,6 +133,7 @@ public class AddRecipe1Fragment extends Fragment {
             inputResep.put("imageURL",filePath);
 
             AddRecipe2Fragment addRecipe2Fragment = new AddRecipe2Fragment();
+            //Todo: ini cara buat ngirim objek/variabel dari suatu fragment ke fragment lain, kalo yg di put itu serializeable, brarti objek yg dikirim adalah objek, kalo put String, objek yg dikirim String
             Bundle bundle = new Bundle();
             bundle.putSerializable("inputResep1",inputResep);
             addRecipe2Fragment.setArguments(bundle);
@@ -177,16 +179,4 @@ public class AddRecipe1Fragment extends Fragment {
         fragmentTransaction.replace(R.id.frameFragment,fragment).addToBackStack(null);
         fragmentTransaction.commit();
     }
-
-    /*private void setClearInput(){
-        et_nama_masakan.setText("");
-        et_bahan.setText("");
-        et_cara_masak.setText("");
-        et_lama_masak.setText("");
-        et_deskripsi.setText("");
-        videoView.setVideoURI(null);
-        videoView.setVisibility(View.INVISIBLE);
-        btn_addvideo.setVisibility(View.VISIBLE);
-    }*/
-
 }

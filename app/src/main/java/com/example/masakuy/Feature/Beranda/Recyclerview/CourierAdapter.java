@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.masakuy.Feature.Beranda.CheckoutFragment;
+import com.example.masakuy.Feature.Beranda.Supermarket.CheckoutFragment;
 import com.example.masakuy.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

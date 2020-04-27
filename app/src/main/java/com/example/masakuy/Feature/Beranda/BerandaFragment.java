@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeAdapter;
 import com.example.masakuy.Feature.Beranda.Recyclerview.RecipeModel;
+import com.example.masakuy.Feature.Beranda.ResepMakanan.RecipeMore;
+import com.example.masakuy.Feature.Beranda.Supermarket.PilihBahanBaku;
 import com.example.masakuy.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -58,18 +60,24 @@ public class BerandaFragment extends Fragment {
 
     private BottomNavigationView bottomNavigationView;
 
+    //Todo: onCreate buat si fragmentnya/si acitivitynya
+    //method buat fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
+    //Todo: method onCreateView itu buat nampilin si layout fragmentnya, kalo di activity biasanya ada di onCreate
+    //method nampilin layout fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.beranda_fragment, container, false);
     }
 
+    //Todo: onStart itu buat mulai fragment atapun activitynya
+    //method buat mulai fragment
     @Override
     public void onStart() {
         super.onStart();
@@ -157,6 +165,7 @@ public class BerandaFragment extends Fragment {
         });
     }
 
+    //Todo: initRecyclerView Buat  bikin object list item, biasanya buat ngambil data dari database yang datanya > 1
     private void initRecyclerView(){ // fungsi buat bikin object list resep makanan
         rvListFood = getActivity().findViewById(R.id.rv_food_item);
         adapter = new RecipeAdapter(reverse,getActivity().getApplicationContext(),getActivity());
@@ -165,6 +174,8 @@ public class BerandaFragment extends Fragment {
         rvListFood.setAdapter(adapter);
     }
 
+    //Todo: setFragment Buat  pindah - pindah fragment, kalo di setfragmentnya ada iterasi/loop, dia ngelakuin loopingan buat nge pop stack fragment, biar si tampilannya itu gak tumpang tindih
+    //method buat pindah - pindah fragment, cara pindah fragment beda sama activity
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameFragment,fragment).addToBackStack(null);

@@ -28,18 +28,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+//Todo: Class yg ada di recyclerview ada adapter sama model, adapter itu buat ngemodelin si halaman itemnya, item2nya itu kan beda2 layoutnya, makanya gabisa dijadiin satu class, kalo modelnya itu sendiri buat nampung variabel ygy dibutuhin di item nya itu
 public class BahanBakuAdapter extends RecyclerView.Adapter<BahanBakuAdapter.ViewHolder> {
 
     private List<BahanBakuModel> mList = new ArrayList<>();
     private Context mContext;
     private FragmentActivity mActivity;
 
+    //Todo: Ini konstruktor, setiap adapter punya konstruktor, ini contoh konstruktor di bahabbakuadapter buat manggil si adapternya pake method ini
     public BahanBakuAdapter(List<BahanBakuModel> mList, Context mContext, FragmentActivity mActivity) {
         this.mList = mList;
         this.mContext = mContext;
         this.mActivity = mActivity;
     }
 
+    //Todo: ini buat nampilin si halaman itemnya itu
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         mContext = viewGroup.getContext();
@@ -49,6 +52,7 @@ public class BahanBakuAdapter extends RecyclerView.Adapter<BahanBakuAdapter.View
         return viewHolder;
     }
 
+    //Todo: Ini buat ngolah si objek2 yg ada di halaman item ini
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int i) {
         final int position = i;
@@ -167,6 +171,7 @@ public class BahanBakuAdapter extends RecyclerView.Adapter<BahanBakuAdapter.View
         return mList.size();
     }
 
+    //Todo: Ini buat inisiasi semua objek yang ada di halaman itemnya
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tv_nama, tv_harga, tv_deskripsi, tv_stok;

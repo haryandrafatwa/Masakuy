@@ -1,5 +1,6 @@
 package com.example.masakuy.Feature.Beranda.Recyclerview;
 
+//Todo: ini class buat nampung semua variabel yang dibutuhin di halaman item, misal ini BahanBakuModel, dia nampung semua variabel yang dibutuhin sama item pas milih bahan baku
 public class BahanBakuModel {
 
     private String key,nama, jenis, deskripsi;

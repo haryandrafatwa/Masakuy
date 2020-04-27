@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView tv_daftar;
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
+    //method buat activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         initialize();
     }
 
+    //method buat inisiasi semua objek yang ada di halaman ini
     private void initialize() {
         mAuth = FirebaseAuth.getInstance();
         mDialog = new ProgressDialog(this);
@@ -84,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //method buat mulai activity
     @Override
     protected void onStart() {
         super.onStart();
@@ -127,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    //method buat pindah - pindah antar activity
     public void setActivity(Class activity) {
         Intent mainIntent = new Intent(LoginActivity.this, activity);
         startActivity(mainIntent);

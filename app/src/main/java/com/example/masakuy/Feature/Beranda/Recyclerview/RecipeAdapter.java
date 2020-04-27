@@ -19,7 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.masakuy.Feature.Artikel.ArtikelDetailFragment;
-import com.example.masakuy.Feature.Beranda.RecipeDetailFragment;
+import com.example.masakuy.Feature.Beranda.ResepMakanan.RecipeDetailFragment;
 import com.example.masakuy.R;
 import com.squareup.picasso.Picasso;
 

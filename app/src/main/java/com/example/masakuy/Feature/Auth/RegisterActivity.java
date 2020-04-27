@@ -44,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressDialog mDialog;
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
+    //method buat activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         initialize();
     }
 
+    //method buat inisiasi semua objek yg ada di halaman ini
     private void initialize() {
 
         et_email = findViewById(R.id.et_email_register);
@@ -77,6 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        //ngecek apakah si emailnya ada @ sama . apa engga
         et_email.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -170,6 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    //method buat pindah2 activity
     public void setActivity(Class activity) {
         Intent mainIntent = new Intent(RegisterActivity.this, activity);
         startActivity(mainIntent);
